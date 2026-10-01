@@ -44,88 +44,174 @@ export const projects: Project[] = [
     ],
     implementationDetails: [
       {
-        title: "Hardware UART Gateway & Serial Parsing",
+        title: "UART Communication & Frame Handling",
         description:
-          "Communication with physical train telemetry units occurs through serial UART interfaces configured with explicit baud rates and parity checking.",
+          "Communication with physical train telemetry microcontrollers occurs over serial UART interfaces configured with 115200 baud, 8 data bits, no parity, and 1 stop bit (8-N-1).",
         points: [
-          "Implemented frame delimiter detection and cyclic redundancy checks (CRC-16) to discard corrupted packets.",
-          "Designed non-blocking ring buffers to prevent byte loss during sudden burst transmissions.",
-          "Established automated reconnection logic to re-establish serial port handles upon physical disconnects.",
+          "Developed non-blocking serial reading routines in Python utilizing pyserial and ring buffers to prevent byte loss during sudden bursts.",
+          "Implemented automated port discovery and reconnect handlers to seamlessly recover from physical cable disconnects or USB-to-UART adapter resets.",
+          "Applied frame synchronization scanning for magic preamble bytes (0xAA 0x55) to establish clean frame boundaries amidst serial line noise.",
         ],
       },
       {
-        title: "Asynchronous Event Pipeline & State Caching",
+        title: "Message Parsing & Validation",
         description:
-          "To avoid blocking hardware ingestion routines, raw events are handed off immediately to RabbitMQ.",
+          "Incoming binary frames are strictly parsed and validated before being converted into structured application payloads.",
         points: [
-          "Topic-based exchanges route telemetry data to dedicated queues for live monitoring and historical persistence.",
-          "Redis holds the latest canonical coordinates, speed vectors, and alert flags for instantaneous retrieval.",
-          "PostgreSQL receives batch-committed event logs to minimize disk I/O pressure.",
+          "Enforced strict 18-byte fixed-header binary layout containing preamble, train identifier, 32-bit UTC epoch timestamp, speed in tenths of km/h, track block ID, and alarm bitmasks.",
+          "Computed and verified CRC-16 (CCITT polynomial 0x1021) checksums over the payload bytes; corrupted packets are logged and immediately discarded without polluting downstream systems.",
+          "Validated domain invariants (e.g., maximum permissible acceleration thresholds and valid track block identifiers) at the gateway boundary.",
         ],
       },
       {
-        title: "WebSocket Dispatcher Gateway",
+        title: "Event-Driven Processing with RabbitMQ",
         description:
-          "Operational centers monitor metro fleet movements through low-latency full-duplex WebSocket connections.",
+          "To insulate the serial hardware ingestion loop from backend database latency, events are published asynchronously to a centralized RabbitMQ broker.",
         points: [
-          "Implemented room-based channel subscriptions allowing operators to monitor specific metro lines or trains.",
-          "Integrated heartbeat ping/pong mechanisms to detect stale connections and clean up subscriber sets.",
-          "Maintained state delta broadcasts to minimize bandwidth over mobile networks.",
+          "Configured a topic exchange ('amq.topic') routing telemetry packets based on routing keys like 'metro.line1.train4.telemetry' and 'metro.alerts.emergency'.",
+          "Decoupled telemetry ingestion from state computation, allowing workers to scale independently based on processing load.",
+          "Implemented publisher confirms and dead-letter exchanges (DLX) to safely capture unroutable or malformed payloads for post-incident debugging.",
+        ],
+      },
+      {
+        title: "Backend APIs & Service Organization",
+        description:
+          "The backend architecture separates operational event coordination, client REST APIs, and analytical computations into dedicated services.",
+        points: [
+          "The primary Node.js service manages RabbitMQ consumer loops, executes state updates, and coordinates WebSocket client connections.",
+          "A companion Python/FastAPI analytics service provides dedicated REST endpoints for complex sensor data aggregation and historical query transformations.",
+          "Clear separation of concerns is maintained across transport handlers, domain business rules, and repository persistence layers.",
+        ],
+      },
+      {
+        title: "Database Persistence (PostgreSQL & Redis)",
+        description:
+          "Persistence utilizes a dual-tier strategy balancing sub-second access requirements with long-term audit trail durability.",
+        points: [
+          "PostgreSQL stores normalized relational tables for trains, metro lines, driver shifts, emergency alarm logs, and historical trip telemetry.",
+          "Telemetry write operations are batched in memory and committed periodically to PostgreSQL to minimize disk I/O contention during peak traffic.",
+          "Composite B-tree indexes on (train_id, recorded_at) optimize historical trajectory and velocity queries.",
+          "Redis caches current train coordinates, speed vectors, and active alarm states with short TTLs for instant retrieval.",
+        ],
+      },
+      {
+        title: "WebSocket Connection Management & Broadcasting",
+        description:
+          "The React operational dashboard receives live train movements and alarms via low-latency full-duplex WebSockets.",
+        points: [
+          "Built a connection lifecycle manager in Node.js tracking connected dispatcher clients and active subscription channels.",
+          "Implemented channel-based filtering allowing dispatchers to subscribe to specific metro lines rather than receiving all network traffic.",
+          "Heartbeat ping/pong frames detect broken connections; stale sockets are pruned to prevent memory leaks.",
+          "Emitted state deltas rather than full state trees to conserve mobile bandwidth for field supervisors.",
+        ],
+      },
+      {
+        title: "Testing & Error Handling",
+        description:
+          "Rigorously validated with automated test suites and synthetic telemetry generators simulating edge cases.",
+        points: [
+          "Pytest suites verify byte parser edge cases including truncated frames, corrupted CRCs, and out-of-order byte streams.",
+          "Developed a mock hardware simulator generating realistic multi-train telemetry, emergency brake triggers, and line blockages.",
+          "Jest integration suites verify Node.js RabbitMQ consumers, ensuring state changes correctly update Redis and trigger WebSocket broadcasts.",
+        ],
+      },
+      {
+        title: "Docker & Local Development",
+        description:
+          "The entire multi-service distributed topology is orchestrated via Docker Compose for reproducible local development and testing.",
+        points: [
+          "Configured multi-container topology orchestrating the Python UART Gateway, RabbitMQ, Node.js Backend, Redis, PostgreSQL, and FastAPI services.",
+          "Defined health checks and startup dependency graphs (e.g., backend waits for RabbitMQ and PostgreSQL readiness).",
+          "Mounted development volumes and explicit environment variable files for seamless local iteration without configuration drift.",
         ],
       },
     ],
     engineeringDecisions: [
       {
-        decision: "Adopting RabbitMQ for Telemetry Queueing",
+        decision: "Adopting RabbitMQ as the Central Message Broker",
         rationale:
-          "Ingestion and storage operate at vastly different speeds. A message queue prevents database write latency from stalling high-frequency serial packet reads.",
+          "RabbitMQ provides flexible AMQP topic-based routing, robust delivery acknowledgments, and lightweight broker footprint. It cleanly decouples the real-time serial hardware loop from backend processing and disk I/O.",
         alternativeConsidered:
-          "Direct in-memory queueing in Python was evaluated but rejected due to lack of persistence across process restarts.",
+          "Apache Kafka was evaluated but rejected as overly heavy and operational overkill for the transit fleet scale. In-process event emitters were rejected due to lack of persistence across process restarts.",
       },
       {
-        decision: "Dual-Tier Storage Architecture (Redis + PostgreSQL)",
+        decision: "Dual-Tier Persistence (Redis for Live State, PostgreSQL for Audit)",
         rationale:
-          "Dispatchers only require current train positions in sub-second intervals, making Redis optimal. PostgreSQL is reserved for historical audits and incident analysis.",
+          "Dispatchers only require current train positions in sub-second intervals, making in-memory key-value lookups in Redis optimal. PostgreSQL is reserved for durable historical audits and incident analysis, insulated from high-frequency telemetry writes.",
         alternativeConsidered:
-          "Single PostgreSQL database with polling was rejected due to lock contention during continuous high-frequency updates.",
+          "Writing every raw frame directly to PostgreSQL was evaluated but led to excessive disk write volume and lock contention during high-frequency telemetry bursts.",
+      },
+      {
+        decision: "Full-Duplex WebSockets Over HTTP Long Polling",
+        rationale:
+          "Sub-second fleet monitoring demands instant bidirectional dispatching. WebSockets eliminate HTTP header overhead and latency associated with repetitive polling.",
+        alternativeConsidered:
+          "Server-Sent Events (SSE) were considered for unidirectional streaming, but WebSockets allowed future bidirectional dispatcher commands over the same socket.",
+      },
+      {
+        decision: "Boundary Validation at the Hardware Gateway Layer",
+        rationale:
+          "Validating frames (preamble check and CRC verification) immediately at the serial interface prevents malformed or corrupted packets from ever reaching RabbitMQ or downstream services.",
+        alternativeConsidered:
+          "Pushing raw bytes directly into queues and delegating validation downstream was rejected to avoid wasted compute and poisoned consumer queues.",
+      },
+      {
+        decision: "Multi-Language Service Separation (Python for Serial, Node.js for WebSockets)",
+        rationale:
+          "Python provides mature serial communication and mathematical libraries for sensor decoding. Node.js excels at high-concurrency asynchronous I/O and managing thousands of concurrent WebSocket client connections.",
+        alternativeConsidered:
+          "Building everything in a single monolithic Python process was evaluated, but GIL constraints caused occasional WebSocket broadcast latency spikes during heavy sensor decoding.",
       },
     ],
     challengesAndTradeoffs: [
       {
-        challenge: "Handling Serial Frame Noise and Corrupted Bytes",
+        challenge: "Handling Serial Frame Noise and Corrupted Byte Streams",
         resolution:
-          "Introduced a state-machine parser that scans for magic header bytes and verifies CRC before emitting valid telemetry structures.",
+          "Constructed a state-machine parser that scans for magic preambles and verifies CRC-16 before emitting valid telemetry structures.",
         tradeOff:
-          "Slight CPU overhead per frame in exchange for guaranteed packet validity.",
+          "Introduces slight CPU parsing overhead per frame, which is an acceptable trade-off for guaranteed packet validity.",
       },
       {
-        challenge: "WebSocket Connection Drops Under Fluctuating Networks",
+        challenge: "WebSocket Connection Drops and Network Volatility",
         resolution:
-          "Implemented client-side reconnection routines with exponential backoff and server-side connection lifecycle tracking.",
+          "Implemented client-side reconnection routines with exponential backoff, state reconciliation upon reconnect, and server-side heartbeat tracking.",
         tradeOff:
-          "Clients must handle brief state reconciliations upon reconnecting.",
+          "Clients must briefly reconcile state upon reconnecting rather than assuming seamless continuity.",
+      },
+      {
+        challenge: "Concurrency and Race Conditions in Multi-Train Collision Warnings",
+        resolution:
+          "Track segment reservations are managed through centralized state validations before updating track occupancy tables.",
+        tradeOff:
+          "Slight serialization delay when multiple trains report simultaneous block occupancy.",
       },
     ],
     testingAndValidation: [
       "Authored unit tests using Pytest for the byte parser, covering malformed packets, truncated buffers, and CRC mismatch scenarios.",
       "Developed mock hardware serial telemetry generators simulating multi-train movements, speed variations, and signal alarms.",
       "Conducted integration tests validating end-to-end message delivery from serial simulator through RabbitMQ to connected WebSocket clients.",
+      "Verified database schema integrity and foreign key constraints under simulated concurrent batch insert loads.",
     ],
     resultsAndLessons: {
       completedWork: [
-        "Functional UART serial ingestion gateway with CRC packet validation.",
-        "RabbitMQ message queuing pipeline separating real-time caching from persistence.",
-        "WebSocket server streaming live train telemetry to operational dashboards.",
-        "PostgreSQL persistence schema for historical operational telemetry.",
-        "Comprehensive automated unit test suite for packet parsing and state computation.",
+        "Functional Python UART serial ingestion gateway with CRC-16 packet validation and ring-buffer framing.",
+        "RabbitMQ message queuing pipeline separating real-time caching from relational persistence.",
+        "Node.js backend service consuming queue events and broadcasting live train state to connected WebSocket clients.",
+        "Dual-tier persistence: Redis for sub-second live telemetry reads, PostgreSQL for historical audit logs.",
+        "FastAPI service endpoints providing sensor data transformations and analytics.",
+        "Multi-container Docker Compose configuration orchestrating the entire platform locally.",
+        "Automated unit test suite verifying parser robustness and simulated multi-train telemetry.",
       ],
       plannedWork: [
-        "Automated failover clustering for the message broker nodes.",
-        "Predictive maintenance heuristics based on historical sensor deviation logs.",
+        "High-availability clustering and automated failover for RabbitMQ broker nodes.",
+        "Predictive maintenance models based on historical sensor deviation trends.",
+        "Hardware-in-the-loop (HIL) testing against physical scale-model railway track controllers.",
       ],
       lessonsLearned: [
-        "Hardware-software boundaries require defensive programming at every byte boundary.",
-        "Separating transient operational state from permanent audit trails significantly simplifies database indexing and backup strategies.",
+        "Boundary validation at the ingestion layer is the single best defense against distributed system pollution.",
+        "Decoupling physical hardware serial reading from web-facing event distribution using message queues is essential for system stability.",
+        "Explicitly separating transient operational state from permanent audit logs keeps databases performant and backups agile.",
+        "Engineering Prototype Notice: SAMCS is an advanced engineering prototype and distributed systems research platform developed for technical research; it does not claim formal railway safety integrity certifications (SIL-4) or municipal transit production deployment.",
       ],
     },
     architectureOverview:

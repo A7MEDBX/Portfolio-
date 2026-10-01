@@ -7,6 +7,10 @@ import { Button } from "@/components/Button";
 import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
 import { ProjectVisualPreview } from "@/components/home/ProjectVisualPreview";
 import {
+  SAMCSArchitectureVisual,
+  SAMCSTelemetryFrameVisual,
+} from "./SAMCSVisuals";
+import {
   ExternalLink,
   Layers,
   Cpu,
@@ -210,13 +214,20 @@ export function CaseStudyTemplate({
           </p>
 
           {/* Genuine Labeled Technical Visual Preview */}
-          <ProjectVisualPreview slug={project.slug} />
-
-          {/* Detailed Topology Block Diagram */}
-          <ArchitectureDiagram
-            title={`${project.title} — System Topology`}
-            type={diagramType}
-          />
+          {project.slug === "samcs" ? (
+            <div className="space-y-6">
+              <SAMCSArchitectureVisual />
+              <SAMCSTelemetryFrameVisual />
+            </div>
+          ) : (
+            <div>
+              <ProjectVisualPreview slug={project.slug} />
+              <ArchitectureDiagram
+                title={`${project.title} — System Topology`}
+                type={diagramType}
+              />
+            </div>
+          )}
         </section>
 
         {/* 7. TECHNOLOGY STACK */}
@@ -253,7 +264,7 @@ export function CaseStudyTemplate({
                     {impl.title}
                   </h3>
                   <span className="text-xs font-mono text-[#2D4A3E]">
-                    SUBSYSTEM 0{idx + 1}
+                    SECTION 0{idx + 1}
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-[#686868] font-sans leading-relaxed mb-4">
