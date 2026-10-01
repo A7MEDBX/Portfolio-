@@ -23,6 +23,7 @@ const monoFont = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ahmedragab.dev"),
   title: {
     template: "%s — Ahmed Ragab",
     default: "Ahmed Ragab — Backend Software Engineer",
@@ -31,15 +32,47 @@ export const metadata: Metadata = {
     "Backend Software Engineer specialized in distributed systems, robust APIs, and scalable backend architecture.",
   keywords: [
     "Ahmed Ragab",
+    "BEDO",
     "Backend Software Engineer",
     "Distributed Systems",
-    "Go",
-    "Python",
+    "FastAPI",
+    "Node.js",
     "PostgreSQL",
+    "RabbitMQ",
     "System Design",
     "APIs",
   ],
-  authors: [{ name: "Ahmed Ragab" }],
+  authors: [{ name: "Ahmed Ragab", url: "https://ahmedragab.dev" }],
+  creator: "Ahmed Ragab",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://ahmedragab.dev",
+    siteName: "Ahmed Ragab — Portfolio",
+    title: "Ahmed Ragab — Backend Software Engineer",
+    description:
+      "Backend Software Engineer specialized in distributed systems, robust APIs, and scalable backend architecture.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Ahmed Ragab — Backend Software Engineer",
+    description:
+      "Backend Software Engineer specialized in distributed systems, robust APIs, and scalable backend architecture.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
