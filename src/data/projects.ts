@@ -801,6 +801,181 @@ export const projects: Project[] = [
     ],
     announcementUrl:
       "https://www.linkedin.com/posts/mahmoud-ayman-ez_ieee-ieeeaswan-webdevelopment-ugcPost-7445887604815765504-G8Lp/",
+    liveUrl: "https://ieeeasw.dev",
+  },
+  {
+    slug: "ieee-olympics-problem-solving",
+    title: "IEEE Olympics — Problem Solving Duel Competition",
+    subtitle:
+      "Competitive programming event featuring a qualification round and a double-elimination duel tournament.",
+    category: "Competition Design & Event Operations",
+    timeline: "2024",
+    status: "Completed",
+    featured: true,
+    roleTitle: "Head of the Competition",
+    heroImage: "/images/olympics/olympics-duel-match.jpg",
+    technologies: [
+      "Competition Design",
+      "Tournament Bracket Architecture",
+      "Double-Elimination Logic",
+      "Problem Difficulty Calibration",
+      "Tiebreaker Resolution",
+      "Event Operations",
+    ],
+    summary:
+      "A structured competitive programming tournament format engineered to evaluate authentic algorithmic problem-solving ability, decision-making under strict time limits, and competitive consistency through a 90-minute qualification contest and a 16-participant double-elimination duel tournament.",
+    problemStatement:
+      "Traditional collegiate coding contests typically evaluate aggregate problem sets in quiet batch sessions, failing to test direct head-to-head performance under intense pressure or provide clear, dramatic spectator engagement. The student branch needed a structured, fair tournament format that tested rapid problem comprehension while guaranteeing that a single bad problem would not prematurely eliminate a skilled competitor.",
+    objectives: [
+      "Design a two-stage competitive programming tournament structure balancing broad initial participation with high-stakes 1-on-1 duels.",
+      "Establish fair qualification ranking rules based on total solved problems and penalty time over a 90-minute 10-problem contest.",
+      "Structure a deterministic double-elimination duel bracket ensuring every qualified contestant must lose two matches before elimination.",
+      "Define unambiguous match resolution protocols: single-problem rapid duels with instant tiebreaker escalation when unresolved.",
+      "Coordinate on-site event operations, match tracking, judge deliberations, and competitor station logistics as Head of the Competition.",
+    ],
+    systemOverview:
+      "The competition is structured into two sequential stages designed to simulate high-pressure competitive programming environments. Stage 1 executes as a 90-minute contest where all registered participants tackle 10 problems of varying difficulty. Leaderboard standings are computed via solved count and penalty time, advancing the top 16 contestants to Stage 2. Stage 2 executes as a double-elimination duel tournament: participants compete in paired workstations on a single problem where the first accepted submission claims victory. Losers drop to the lower bracket for redemption duels, while survivors advance through winner and loser finals to the Grand Championship.",
+    contribution:
+      "Served as Head of the Competition, designing the full competition format, formalizing qualification ranking rules, architecting the double-elimination tournament progression, establishing tiebreaker protocols, and coordinating on-site event execution.",
+    keyResponsibilities: [
+      "Designed the two-stage competition format, balancing qualification breadth with head-to-head duel intensity.",
+      "Authored qualification advancement criteria selecting the top 16 performers based on solved problem count and submission penalty time.",
+      "Structured the complete double-elimination duel tournament bracket, mapping winner and loser progressions through to the Grand Final.",
+      "Formulated deterministic match-resolution and tiebreaker rules to handle edge cases where neither competitor solves the primary duel problem.",
+      "Supervised on-site operational logistics, timing clocks, match tracking boards, and technical jury coordination throughout the event.",
+    ],
+    teamLeadership: {
+      roleTitle: "Head of the Competition",
+      leadershipNarrative:
+        "Directing the IEEE Olympics competition required bridging contest design theory with real-time operational execution. Designing tournament brackets, calibrating problem difficulty curves, and maintaining absolute fairness during fast-paced head-to-head duels required clear technical rules and tight coordination with judges, problem setters, and venue logistics volunteers.",
+      responsibilities: [
+        "Tournament Format Architecture: Formalized bracket progression logic, seeding rules, and double-elimination constraints.",
+        "Problem Difficulty Calibration: Reviewed problem sets with jury members to ensure balanced problem curves across qualification and duels.",
+        "Operational Floor Management: Managed duel station rotations, timing monitors, and live spectator scoreboard updates.",
+        "Dispute Prevention & Rule Enforcement: Established transparent arbitration criteria for edge cases, tiebreakers, and submission timestamp validation.",
+      ],
+    },
+    implementationDetails: [
+      {
+        title: "Stage 1: Qualification Round Architecture",
+        description:
+          "The qualification stage functioned as a comprehensive, objective filter evaluating foundational problem-solving across all entrants.",
+        points: [
+          "90-minute simultaneous individual programming contest covering a curated pool of 10 algorithmic problems of graded difficulty.",
+          "Participants were ranked based on standard competitive programming scoring: total number of accepted problems, with cumulative penalty time resolving ties.",
+          "Deterministic cutoff rules advanced the top 16 performers into the tournament stage, while providing non-advancing participants with verified ranking certificates.",
+        ],
+      },
+      {
+        title: "Stage 2: Double-Elimination Duel Tournament Structure",
+        description:
+          "A structured head-to-head elimination bracket where each match is a direct, time-constrained coding duel.",
+        points: [
+          "Contestants seeded into an 8-match Round of 16 based strictly on qualification standings (Seed 1 vs. Seed 16, Seed 2 vs. Seed 15).",
+          "Double-elimination rule: A competitor is only eliminated from the tournament after suffering two match defeats, granting a second chance in the loser bracket.",
+          "Each duel features a single problem under strict countdown timing; the first competitor to achieve an Accepted (AC) verdict on all test cases wins immediately.",
+        ],
+      },
+      {
+        title: "Tiebreaker Protocols & Match Resolution",
+        description:
+          "Pre-defined algorithmic rules designed to guarantee decisive outcomes without subjective jury intervention.",
+        points: [
+          "In the event that neither competitor provides a successful solution within the allotted match window, a curated tiebreaker problem of equal difficulty is introduced.",
+          "When both participants solve the problem, timestamp precision down to the second determines the victorious contestant.",
+          "Eliminated subjective judging debates by binding all outcomes to verifiable automated verdict timestamps.",
+        ],
+      },
+      {
+        title: "Operational Logistics & Physical Tournament Workflow",
+        description:
+          "Coordinating venue hardware, competitor rotations, and physical bracket tracking.",
+        points: [
+          "Configured paired coding stations with isolated test networks to guarantee contest integrity and prevent unauthorized collaboration.",
+          "Maintained a physical live tournament tracking board in the main auditorium so audience members and participants could follow progressions.",
+          "Coordinated rapid turnaround protocols between duel rounds to sustain high energy and maintain event scheduling milestones.",
+        ],
+      },
+    ],
+    engineeringDecisions: [
+      {
+        decision: "Double-Elimination Format Over Single-Elimination",
+        rationale:
+          "Single-elimination brackets possess high variance: an accidental typo or subtle corner case on a single problem can prematurely eliminate an exceptional competitor. Double-elimination guarantees that every finalist has demonstrated sustained consistency by surviving the loser bracket.",
+        alternativeConsidered:
+          "Single-elimination was evaluated for schedule brevity, but discarded because it failed to reward competitive resilience.",
+      },
+      {
+        decision: "Single-Problem Duels with First-Solver Advantage",
+        rationale:
+          "Multi-problem head-to-head matches diffuse focus and reduce dramatic tension. A single problem forces instant strategic trade-offs: writing quick brute-force checks versus architecting optimal asymptotic solutions.",
+        alternativeConsidered:
+          "3-problem sprint matches were considered, but significantly inflated duel duration and diminished spectator clarity.",
+      },
+      {
+        decision: "Honest Operational Scope (Format Design Over Custom Software Platform)",
+        rationale:
+          "In strict alignment with portfolio truthfulness, this initiative is documented as an event and competition design achievement rather than an automated software platform. The competition utilized established contest platforms and manual tournament coordination.",
+        alternativeConsidered:
+          "Claiming custom automated judge software development was strictly avoided to maintain uncompromised professional integrity.",
+      },
+    ],
+    challengesAndTradeoffs: [
+      {
+        challenge: "Calibrating Problem Difficulty for Fast-Paced Duels",
+        resolution:
+          "Selected problems featuring elegant mathematical or algorithmic insights rather than tedious implementation, accompanied by pre-calibrated tiebreaker reserves.",
+        tradeOff:
+          "Required extensive pre-event difficulty benchmarking across multiple programming languages.",
+      },
+      {
+        challenge: "Managing Schedule Constraints in a Double-Elimination Bracket",
+        resolution:
+          "Staggered match stations and parallel duel execution during early elimination rounds to keep total tournament duration within venue reservations.",
+        tradeOff:
+          "Demanded vigilant floor coordination to ensure competitors were seated and prepped on schedule.",
+      },
+      {
+        challenge: "Handling Ambiguous or Stalled Dual-Failure Matches",
+        resolution:
+          "Introduced standardized tiebreaker problems with reduced time limits to prevent deadlocked matches from delaying subsequent rounds.",
+        tradeOff:
+          "Placed heightened psychological pressure on competitors during sudden-death tiebreaker rounds.",
+      },
+    ],
+    testingAndValidation: [
+      "Pre-tested all 10 qualification problems across C++, Python, and Java to guarantee balanced time-limit and memory-limit thresholds.",
+      "Simulated mock duel matches with organizers prior to the event to verify problem solve-time distributions and tiebreaker readiness.",
+      "Audited tournament bracket seeding logic to ensure qualification performance yielded fair bracket distribution.",
+      "Conducted post-event review analyzing solve rates, duel durations, and participant progression fairness.",
+    ],
+    resultsAndLessons: {
+      completedWork: [
+        "Complete tournament architecture designed and successfully executed for the IEEE Olympics.",
+        "90-minute qualification round with 10 calibrated algorithmic problems.",
+        "Top-16 double-elimination duel tournament culminating in the Grand Final.",
+        "Deterministic tiebreaker escalation protocols successfully applied during contested duels.",
+        "Photo documentation capturing competition hall, duel matches, live bracket tracking, and awards ceremony.",
+      ],
+      plannedWork: [
+        "Custom automated bracket display dashboard with real-time duel code delta visualization for future iterations.",
+        "Automated tiebreaker problem dispenser integration with online judge APIs.",
+      ],
+      lessonsLearned: [
+        "Competitive tournament design requires the same rigor as distributed system design: deterministic state transitions, clear failure modes, and elimination of edge-case ambiguities.",
+        "Double-elimination formats dramatically increase participant satisfaction by forgiving single-match variance while rewarding endurance and composure.",
+        "Engineering Transparency Notice: The IEEE Olympics project is presented strictly according to its implemented format design and operational coordination; it does not claim custom judging software or unverified participant metrics.",
+      ],
+    },
+    architectureOverview:
+      "A two-stage tournament architecture connecting a 90-minute multi-problem qualification contest to a 16-participant double-elimination duel bracket. Match progression is determined by first-to-solve criteria on single curated problems, backed by instant tiebreaker escalation protocols.",
+    systemHighlights: [
+      "Structured two-stage qualification and double-elimination duel bracket.",
+      "Deterministic match-resolution and rapid tiebreaker problem escalation.",
+      "Documented with 4 authentic event photographs capturing duels, qualification, and awards.",
+    ],
+    announcementUrl:
+      "https://www.linkedin.com/posts/mahmoud-ayman-ez_ieee-ieeesb-ieeeaswan-activity-7454910465849122817-QGLo",
   },
   {
     slug: "sport-club-management",

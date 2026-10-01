@@ -383,5 +383,75 @@ export function ProjectVisualPreview({ slug }: ProjectVisualPreviewProps) {
     );
   }
 
+  if (slug === "ieee-olympics-problem-solving") {
+    return (
+      <div className="w-full border border-[#E5E2DC] bg-[#FAF9F6] p-4 sm:p-5 rounded-xs my-4 overflow-hidden">
+        <div className="flex items-center justify-between text-[11px] font-mono text-[#686868] border-b border-[#E5E2DC] pb-2 mb-3">
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E]" />
+            SYSTEM PREVIEW: 2-STAGE TOURNAMENT ARCHITECTURE
+          </span>
+          <span className="text-[#2D4A3E] font-medium">COMPETITION DESIGN</span>
+        </div>
+
+        <div className="w-full overflow-x-auto">
+          <svg
+            viewBox="0 0 680 140"
+            className="w-full min-w-[540px] text-xs font-mono"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Box 1: Stage 1 Qualification */}
+            <rect x="10" y="25" width="140" height="90" rx="2" fill="#F5F3EE" stroke="#2D4A3E" strokeWidth="1.2" />
+            <text x="80" y="52" textAnchor="middle" fill="#222222" fontWeight="600" fontSize="11">Stage 1: Qualification</text>
+            <text x="80" y="70" textAnchor="middle" fill="#686868" fontSize="9.5">90-Minute Run</text>
+            <text x="80" y="86" textAnchor="middle" fill="#2D4A3E" fontSize="9">10 Problems</text>
+            <text x="80" y="100" textAnchor="middle" fill="#686868" fontSize="8.5">Solved &amp; Penalty Rank</text>
+
+            {/* Link 1 */}
+            <path d="M150 70 L195 70" stroke="#2D4A3E" strokeWidth="1.2" />
+            <polygon points="195,70 188,67 188,73" fill="#2D4A3E" />
+            <text x="172" y="63" textAnchor="middle" fill="#686868" fontSize="8">Top 16</text>
+
+            {/* Box 2: Stage 2 Winner Bracket */}
+            <rect x="195" y="15" width="150" height="52" rx="2" fill="#FAF9F6" stroke="#2D4A3E" strokeWidth="1.2" />
+            <text x="270" y="36" textAnchor="middle" fill="#222222" fontWeight="600" fontSize="10.5">Winner Bracket</text>
+            <text x="270" y="52" textAnchor="middle" fill="#2D4A3E" fontSize="8.5">Head-to-Head 1-on-1 Duels</text>
+
+            {/* Box 3: Stage 2 Loser Bracket */}
+            <rect x="195" y="75" width="150" height="52" rx="2" fill="#FAF9F6" stroke="#8C887B" strokeWidth="1.2" />
+            <text x="270" y="96" textAnchor="middle" fill="#222222" fontWeight="600" fontSize="10.5">Loser Bracket</text>
+            <text x="270" y="112" textAnchor="middle" fill="#686868" fontSize="8.5">Double-Elimination Path</text>
+
+            {/* Convergence to Final */}
+            <path d="M345 41 L390 55" stroke="#2D4A3E" strokeWidth="1.2" />
+            <polygon points="390,55 383,52 385,58" fill="#2D4A3E" />
+
+            <path d="M345 101 L390 85" stroke="#8C887B" strokeWidth="1.2" />
+            <polygon points="390,85 385,82 383,88" fill="#8C887B" />
+
+            {/* Box 4: Grand Final */}
+            <rect x="390" y="25" width="140" height="90" rx="2" fill="#F5F3EE" stroke="#2D4A3E" strokeWidth="1.5" />
+            <text x="460" y="52" textAnchor="middle" fill="#222222" fontWeight="600" fontSize="11">Grand Final Duel</text>
+            <text x="460" y="70" textAnchor="middle" fill="#686868" fontSize="9.5">WB vs LB Winner</text>
+            <text x="460" y="86" textAnchor="middle" fill="#2D4A3E" fontSize="9">First AC Wins</text>
+            <text x="460" y="100" textAnchor="middle" fill="#686868" fontSize="8.5">Tiebreaker Protocols</text>
+
+            {/* Link 3 */}
+            <path d="M530 70 L570 70" stroke="#2D4A3E" strokeWidth="1.2" />
+            <polygon points="570,70 563,67 563,73" fill="#2D4A3E" />
+
+            {/* Box 5: Operational Leadership */}
+            <rect x="570" y="25" width="100" height="90" rx="2" fill="#FAF9F6" stroke="#E5E2DC" strokeWidth="1.2" />
+            <text x="620" y="52" textAnchor="middle" fill="#222222" fontWeight="600" fontSize="10.5">Leadership</text>
+            <text x="620" y="70" textAnchor="middle" fill="#686868" fontSize="9">Head of Comp.</text>
+            <text x="620" y="86" textAnchor="middle" fill="#2D4A3E" fontSize="8.5">Event Rules</text>
+            <text x="620" y="100" textAnchor="middle" fill="#686868" fontSize="8.5">Coordination</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }

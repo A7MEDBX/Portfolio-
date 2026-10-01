@@ -55,6 +55,8 @@ export interface Project {
     responsibilities: string[];
     leadershipNarrative: string;
   };
+  heroImage?: string;
+  roleTitle?: string;
 }
 
 export type ExperienceType =

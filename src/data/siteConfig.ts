@@ -10,7 +10,7 @@ export const siteConfig: SiteConfig = {
   // Clear placeholders without inventing false credentials
   email: "contact@ahmedragab.dev",
   github: "https://github.com",
-  linkedin: "https://linkedin.com",
+  linkedin: "https://www.linkedin.com/in/am-ragab",
   navLinks: [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },

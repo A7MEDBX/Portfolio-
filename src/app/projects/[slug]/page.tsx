@@ -58,10 +58,23 @@ export default async function ProjectCaseStudyPage({
   const nextProject =
     projectIndex < projects.length - 1 ? projects[projectIndex + 1] : null;
 
-  // Select 2 related projects from different categories/slugs
-  const relatedProjects = projects
-    .filter((p) => p.slug !== project.slug)
-    .slice(0, 2);
+  // Select 2 related projects (cross-linking related IEEE initiatives)
+  let relatedProjects: typeof projects = [];
+  if (project.slug === "ieee-olympics-problem-solving") {
+    const ieeeWeb = projects.find((p) => p.slug === "ieee-aswan-student-branch");
+    const other = projects.find((p) => p.slug === "samcs");
+    relatedProjects = [ieeeWeb, other].filter(Boolean) as typeof projects;
+  } else if (project.slug === "ieee-aswan-student-branch") {
+    const ieeeOlympics = projects.find(
+      (p) => p.slug === "ieee-olympics-problem-solving"
+    );
+    const other = projects.find((p) => p.slug === "lostproject");
+    relatedProjects = [ieeeOlympics, other].filter(Boolean) as typeof projects;
+  } else {
+    relatedProjects = projects
+      .filter((p) => p.slug !== project.slug)
+      .slice(0, 2);
+  }
 
   return (
     <Container>

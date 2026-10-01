@@ -1,5 +1,6 @@
 import React from "react";
-import { ExternalLink, Image as ImageIcon, ShieldCheck, Users, Lock, Layers } from "lucide-react";
+import Image from "next/image";
+import { ExternalLink, Play, Globe, Video, Image as ImageIcon } from "lucide-react";
 
 export function IEEEAswanArchitectureVisual() {
   return (
@@ -104,48 +105,87 @@ export function IEEEAswanArchitectureVisual() {
 
 export function IEEEAswanPlaceholderVisual() {
   return (
-    <figure className="my-8 border border-[#E5E2DC] bg-[#FAF9F6] p-6 sm:p-8 rounded-xs">
-      <figcaption className="text-xs font-mono text-[#686868] uppercase tracking-wider mb-4 border-b border-[#E5E2DC] pb-2 flex items-center justify-between">
+    <figure className="my-8 border border-[#E5E2DC] bg-[#FAF9F6] p-6 sm:p-8 rounded-xs space-y-6">
+      <figcaption className="text-xs font-mono text-[#686868] uppercase tracking-wider border-b border-[#E5E2DC] pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
         <span className="font-semibold text-[#222222]">
-          Visual Presentation &amp; Application Interface
+          Visual Presentation &amp; Application Showcase
         </span>
-        <span className="text-[#2D4A3E]">Neutral Placeholder</span>
+        <span className="text-[#2D4A3E]">Verified Video &amp; Interface Preview</span>
       </figcaption>
 
-      {/* Clearly marked neutral placeholder box */}
-      <div className="border-2 border-dashed border-[#CDC8BE] bg-[#F7F5F0] rounded-xs p-8 sm:p-12 text-center flex flex-col items-center justify-center min-h-[240px]">
-        <div className="w-12 h-12 rounded-full bg-[#FAF9F6] border border-[#E5E2DC] flex items-center justify-center text-[#2D4A3E] mb-4">
-          <ImageIcon className="w-6 h-6 text-[#2D4A3E]" />
-        </div>
-
-        <span className="text-xs font-mono uppercase tracking-widest text-[#2D4A3E] font-medium mb-1">
-          Neutral Media Placeholder
-        </span>
-        <h4 className="font-serif text-lg text-[#222222] font-normal mb-2">
-          IEEE Aswan Student Branch Website Interface
-        </h4>
-        <p className="text-xs text-[#686868] max-w-md mx-auto leading-relaxed mb-4">
-          In strict compliance with portfolio accuracy standards, this neutral placeholder reserves space for verified public website screenshots and administrative dashboard captures once authorized media assets are provided.
-        </p>
-
-        <div className="inline-flex items-center gap-2 bg-[#FAF9F6] border border-[#E5E2DC] px-3.5 py-1.5 rounded-xs text-[11px] font-mono text-[#686868]">
-          <span>Source: Public Announcement</span>
-          <span>•</span>
+      {/* 1. Authentic Video Demonstration Card */}
+      <div className="border border-[#E5E2DC] bg-white rounded-xs overflow-hidden">
+        <div className="relative aspect-16/9 bg-[#1A1A1A] group">
+          <Image
+            src="/images/website/website-launch-thumbnail.jpg"
+            alt="IEEE Aswan Student Branch Website Launch Announcement Video Preview"
+            fill
+            sizes="(max-width: 800px) 100vw, 800px"
+            className="object-cover group-hover:scale-101 transition-transform duration-200"
+          />
           <a
             href="https://www.linkedin.com/posts/mahmoud-ayman-ez_ieee-ieeeaswan-webdevelopment-ugcPost-7445887604815765504-G8Lp/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#2D4A3E] hover:underline flex items-center gap-1"
+            className="absolute inset-0 bg-black/35 hover:bg-black/45 transition-colors flex flex-col items-center justify-center p-6 text-center group"
+            title="Watch full launch demonstration on LinkedIn (No auto-play)"
           >
-            <span>Verified Announcement Post</span>
-            <ExternalLink className="w-3 h-3" />
+            <div className="w-14 h-14 rounded-full bg-[#FAF9F6]/95 text-[#2D4A3E] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform mb-3">
+              <Play className="w-6 h-6 fill-current ml-0.5" />
+            </div>
+            <span className="text-white font-serif text-base sm:text-lg font-medium drop-shadow-sm">
+              Watch Website Launch &amp; Feature Walkthrough
+            </span>
+            <span className="text-white/80 text-xs font-mono mt-1 flex items-center gap-1.5">
+              <Video className="w-3.5 h-3.5" />
+              <span>Full Video on LinkedIn • 16:9 HD</span>
+            </span>
+          </a>
+        </div>
+
+        <div className="p-4 sm:p-5 bg-[#FAF9F6] border-t border-[#E5E2DC] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div>
+            <span className="font-mono text-[#2D4A3E] uppercase tracking-wider block mb-0.5">
+              Live Production Deployment
+            </span>
+            <p className="text-[#222222] font-medium font-sans">
+              The platform is actively live and serving the IEEE Aswan community at{" "}
+              <a
+                href="https://ieeeasw.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#2D4A3E] hover:underline underline-offset-4 font-mono font-normal inline-flex items-center gap-1"
+              >
+                <span>https://ieeeasw.dev</span>
+                <Globe className="w-3.5 h-3.5" />
+              </a>
+            </p>
+          </div>
+
+          <a
+            href="https://ieeeasw.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 bg-[#2D4A3E] text-white hover:bg-[#1F342B] px-3.5 py-2 rounded-xs font-medium transition-colors shrink-0"
+          >
+            <span>Visit Live Platform</span>
+            <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>
       </div>
 
-      <p className="text-[12px] text-[#686868] font-sans mt-3 text-center italic">
-        Note: No mock or synthetic UI screenshots are generated to represent the live application. Genuine media will be attached upon verification.
-      </p>
+      {/* 2. Clearly marked neutral placeholder for administrative screenshots */}
+      <div className="border border-dashed border-[#CDC8BE] bg-[#F7F5F0] rounded-xs p-6 text-center">
+        <div className="flex items-center justify-center gap-2 text-xs font-mono text-[#686868] mb-1">
+          <ImageIcon className="w-4 h-4 text-[#2D4A3E]" />
+          <span className="uppercase tracking-widest text-[#2D4A3E] font-medium">
+            Administrative UI Captures
+          </span>
+        </div>
+        <p className="text-xs text-[#686868] max-w-lg mx-auto leading-relaxed">
+          High-resolution internal captures of the role-based administrative review dashboard and Recharts attendance analytics will be added following authorized media exports, preserving authentic representation.
+        </p>
+      </div>
     </figure>
   );
 }

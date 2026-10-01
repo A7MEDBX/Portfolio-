@@ -14,6 +14,7 @@ import {
   LostprojectArchitectureVisual,
   LostprojectMatchingFlowVisual,
 } from "./LostprojectVisuals";
+import Image from "next/image";
 import {
   AirzigzagArchitectureVisual,
   AirzigzagUserJourneyVisual,
@@ -22,6 +23,10 @@ import {
   IEEEAswanArchitectureVisual,
   IEEEAswanPlaceholderVisual,
 } from "./IEEEAswanVisuals";
+import {
+  OlympicsBracketVisual,
+  OlympicsEventGallery,
+} from "./OlympicsVisuals";
 import {
   ExternalLink,
   Layers,
@@ -139,7 +144,32 @@ export function CaseStudyTemplate({
             </div>
           </div>
         </div>
+
+        {project.roleTitle && (
+          <div className="pt-3 border-t border-[#E5E2DC] mt-3 flex items-center gap-2 text-xs font-mono">
+            <span className="text-[#686868]">Leadership Role:</span>
+            <span className="text-[#2D4A3E] font-medium">{project.roleTitle}</span>
+          </div>
+        )}
       </PageHeader>
+
+      {project.heroImage && (
+        <div className="border border-[#E5E2DC] bg-[#FAF9F6] p-3 sm:p-4 rounded-xs my-8 overflow-hidden">
+          <div className="relative aspect-16/9 sm:aspect-21/9 w-full bg-[#1A1A1A] rounded-xs overflow-hidden">
+            <Image
+              src={project.heroImage}
+              alt={project.title}
+              fill
+              priority
+              sizes="(max-width: 900px) 100vw, 900px"
+              className="object-cover"
+            />
+          </div>
+          <p className="text-[11px] font-mono text-[#686868] mt-2.5 text-center">
+            Authentic event documentation: Direct head-to-head coding duel during the IEEE Olympics Problem Solving competition.
+          </p>
+        </div>
+      )}
 
       <article className="space-y-14">
         {/* Executive Summary paragraph */}
@@ -296,6 +326,11 @@ export function CaseStudyTemplate({
             <div className="space-y-6">
               <IEEEAswanArchitectureVisual />
               <IEEEAswanPlaceholderVisual />
+            </div>
+          ) : project.slug === "ieee-olympics-problem-solving" ? (
+            <div className="space-y-6">
+              <OlympicsBracketVisual />
+              <OlympicsEventGallery />
             </div>
           ) : (
             <div>
