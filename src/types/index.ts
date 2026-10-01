@@ -71,12 +71,23 @@ export interface ExperienceItem {
   };
 }
 
+export interface SkillItem {
+  name: string;
+  focus?: string;
+  projectLink?: {
+    title: string;
+    href: string;
+  };
+}
+
 export interface SkillCategory {
   title: string;
   description: string;
-  skills: {
-    name: string;
-    focus?: string;
+  provenSkills: SkillItem[];
+  currentlyLearning?: string[];
+  relevantProjects: {
+    title: string;
+    href: string;
   }[];
 }
 

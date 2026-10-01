@@ -11,6 +11,14 @@ import {
   SAMCSTelemetryFrameVisual,
 } from "./SAMCSVisuals";
 import {
+  LostprojectArchitectureVisual,
+  LostprojectMatchingFlowVisual,
+} from "./LostprojectVisuals";
+import {
+  AirzigzagArchitectureVisual,
+  AirzigzagUserJourneyVisual,
+} from "./AirzigzagVisuals";
+import {
   ExternalLink,
   Layers,
   Cpu,
@@ -218,6 +226,16 @@ export function CaseStudyTemplate({
             <div className="space-y-6">
               <SAMCSArchitectureVisual />
               <SAMCSTelemetryFrameVisual />
+            </div>
+          ) : project.slug === "lostproject" ? (
+            <div className="space-y-6">
+              <LostprojectArchitectureVisual />
+              <LostprojectMatchingFlowVisual />
+            </div>
+          ) : project.slug === "airzigzag" ? (
+            <div className="space-y-6">
+              <AirzigzagArchitectureVisual />
+              <AirzigzagUserJourneyVisual />
             </div>
           ) : (
             <div>

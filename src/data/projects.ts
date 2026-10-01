@@ -263,88 +263,162 @@ export const projects: Project[] = [
     ],
     implementationDetails: [
       {
-        title: "Authentication & User Profile Management",
+        title: "Flutter Mobile Application Architecture",
         description:
-          "User accounts are managed with strict privacy boundaries to prevent exposure of personal contact details.",
+          "The mobile client was constructed in Flutter (Dart) to provide cross-platform parity on iOS and Android with native performance.",
         points: [
-          "Firebase Auth tokens are validated via backend middleware on every private endpoint.",
-          "User profiles are stored in PostgreSQL with normalized contact and notification preferences.",
-          "Claim verification workflows require explicit mutual confirmation before contact exchange is permitted.",
+          "Developed modular screen architectures for item discovery, lost/found registration forms, user profiles, and chat rooms.",
+          "Integrated camera and media picker plugins with client-side image compression prior to network dispatch.",
+          "Implemented state management routines tracking user sessions, active filters, and real-time chat message streams.",
         ],
       },
       {
-        title: "Hybrid Item Matching Pipeline",
+        title: "Node.js & Express REST Backend & API Boundaries",
         description:
-          "Matching items based solely on exact text fails when descriptions vary in vocabulary or language.",
+          "The backend is structured around a decoupled layered architecture separating HTTP routing, validation middleware, domain logic, and persistence.",
         points: [
-          "Deterministic SQL queries filter by geographic radius, date range, and primary category.",
-          "Pinecone vector search matches semantic text descriptions across multilingual inputs.",
-          "Scores are combined to rank prospective matches presented to the user.",
+          "Organized controllers and service modules with clean boundary encapsulation for users, items, claims, and chat.",
+          "Enforced strict request body validation using schema validation middleware to reject malformed payloads before domain processing.",
+          "Implemented standardized JSON API response formats with contextual error messages and status codes.",
         ],
       },
       {
-        title: "Media Upload & Chat Coordination",
+        title: "PostgreSQL Relational Schema Design",
         description:
-          "Users submit photos of found items to substantiate claims, requiring secure media pipelines.",
+          "A normalized relational model enforces data integrity across users, property listings, and recovery communication.",
         points: [
-          "Direct authenticated uploads to Cloudinary with server-side signature validation.",
-          "Image dimensions and file sizes are strictly checked before storing CDN URLs in PostgreSQL.",
-          "In-app messaging service enables claimants and finders to discuss item verification safely.",
+          "Created tables for 'users', 'item_categories', 'items', 'claims', 'chat_rooms', and 'messages' with foreign key cascades.",
+          "Maintained indexes on category ID, location coordinates, status flags, and creation timestamps for rapid filtering.",
+          "Applied transaction blocks (BEGIN / COMMIT) on item claim transitions to ensure mutually exclusive resolution.",
+        ],
+      },
+      {
+        title: "Authentication & Authorization via Firebase Auth",
+        description:
+          "User authentication is delegated to Firebase Auth on the client, with strict verification on the backend.",
+        points: [
+          "Clients transmit Firebase JWT bearer tokens in HTTP authorization headers.",
+          "Custom backend middleware decodes and verifies tokens via the Firebase Admin SDK on all protected endpoints.",
+          "Enforced role-based checks ensuring only item owners can modify listings, accept claim requests, or close tickets.",
+        ],
+      },
+      {
+        title: "Hybrid Matching: Pinecone Vector Embeddings & SQL Constraints",
+        description:
+          "Item matching incorporates both hard relational constraints and semantic vector similarity.",
+        points: [
+          "Deterministic SQL queries filter candidate items by geographic proximity, date boundaries, and primary categories.",
+          "Text descriptions are embedded and indexed in Pinecone to calculate cosine similarity across synonym-heavy descriptions.",
+          "Combined scoring ranks prospective matches, notifying users when high-confidence matches are registered.",
+        ],
+      },
+      {
+        title: "Media Management & Cloudinary Integration",
+        description:
+          "Images of lost and found property are handled securely via dedicated media pipelines without overloading the database.",
+        points: [
+          "Backend issues signed upload parameters allowing authenticated clients to upload images directly to Cloudinary.",
+          "Enforced file size restrictions and image MIME-type validation before committing Cloudinary public IDs and URLs to PostgreSQL.",
+          "Utilized Cloudinary on-the-fly transformations to generate uniform thumbnails for discovery lists and high-res views for claims.",
+        ],
+      },
+      {
+        title: "Real-Time Chat & Socket.io Communication",
+        description:
+          "Claimants and finders communicate via real-time messaging to coordinate property return logistics safely.",
+        points: [
+          "Integrated Socket.io server handling authenticated room-based messaging between claim participants.",
+          "Persisted all messages in PostgreSQL with delivered and read status flags.",
+          "Engineered unread message counter sync routines updating badge notifications on client reconnection.",
+        ],
+      },
+      {
+        title: "Administrative & Content Moderation Endpoints",
+        description:
+          "Backend incorporates moderation capabilities to prevent abuse, spam, and inappropriate listings.",
+        points: [
+          "Implemented endpoints allowing users to flag suspicious items or abusive chat interactions.",
+          "Provided administrative listing review endpoints to deactivate fraudulent items and ban malicious user accounts.",
         ],
       },
     ],
     engineeringDecisions: [
       {
-        decision: "Hybrid Matching (SQL Filters + Pinecone Vectors)",
+        decision: "Hybrid Matching Strategy (SQL Relational Filters + Pinecone Vectors)",
         rationale:
-          "Pure vector search can return geographically impossible matches. Combining categorical SQL filters with vector similarity yields accurate, localized results.",
+          "Pure vector search can match an item with an identical description located hundreds of miles away. Enforcing strict SQL geographic and categorical filters first, then running Pinecone vector similarity on the subset, ensures high relevance and minimal false positives.",
         alternativeConsidered:
-          "Full-text search in PostgreSQL was evaluated, but lacked semantic comprehension for differing item synonyms.",
+          "PostgreSQL full-text search (tsvector) was evaluated, but failed to reliably associate synonyms (e.g. 'rucksack' vs 'backpack' or 'keys' vs 'keychain').",
       },
       {
-        decision: "External Media Storage via Cloudinary",
+        decision: "Offloading Media Storage to Cloudinary via Signed Uploads",
         rationale:
-          "Storing binary images in PostgreSQL leads to database bloat and slow backups. Cloudinary offloads transformation, compression, and global CDN delivery.",
+          "Storing binary image data directly in PostgreSQL causes severe table bloat, slow backups, and high memory consumption. Cloudinary signed uploads eliminate server bandwidth bottlenecks while providing automated image optimization and CDN delivery.",
         alternativeConsidered:
-          "Local file storage on the server was rejected due to lack of persistence across container redeployments.",
+          "Local file storage on the server was rejected due to lack of persistence across container redeployments and absence of built-in image resizing.",
+      },
+      {
+        decision: "Firebase Auth Token Verification on Express Middleware",
+        rationale:
+          "Leveraging Firebase Auth on the client provides battle-tested password, email, and social login workflows. Verifying the JWT tokens on the Node.js backend maintains full ownership of user data and relational business logic in PostgreSQL.",
+        alternativeConsidered:
+          "Custom JWT authentication was considered, but delegating identity management to Firebase accelerated delivery while providing robust token rotation.",
+      },
+      {
+        decision: "Socket.io with PostgreSQL Message Persistence",
+        rationale:
+          "In-app peer messaging requires immediate delivery when both users are online, combined with durable persistence so offline users receive messages upon reconnection.",
+        alternativeConsidered:
+          "Third-party managed chat APIs were rejected to keep user communication data entirely self-contained and private.",
       },
     ],
     challengesAndTradeoffs: [
       {
-        challenge: "Preventing Spam and False Recovery Claims",
+        challenge: "Maintaining Accurate Unread Message Counts Across App Restarts",
         resolution:
-          "Enforced rate limiting on claim submissions and required security verification questions set by the original poster.",
+          "Stored an explicit 'read_at' timestamp per participant in the database, allowing instant calculation of unread counts via indexed SQL count queries on reconnect.",
         tradeOff:
-          "Adds slight friction to claim creation, but drastically reduces fraudulent interactions.",
+          "Requires updating room participant read states on client view focus.",
       },
       {
-        challenge: "Handling Image Upload Latency on Mobile Networks",
+        challenge: "Synchronizing Relational Database State with Pinecone Vector Indexes",
         resolution:
-          "Implemented client-side image compression in Flutter prior to upload dispatch.",
+          "Updated Pinecone vector records immediately following successful PostgreSQL transaction commits; flagged items that fail indexing for automated retry.",
         tradeOff:
-          "Client device performs slight compression work before transmitting bytes.",
+          "Adds slight latency to item creation requests to guarantee search consistency.",
+      },
+      {
+        challenge: "Preventing Malicious and Non-Image Media Uploads",
+        resolution:
+          "Enforced strict file signature checks and Cloudinary upload presets restricting accepted formats to JPEG, PNG, and WebP under 5MB.",
+        tradeOff:
+          "Requires explicit client-side pre-flight checks before upload dispatch.",
       },
     ],
     testingAndValidation: [
-      "Tested API endpoints with automated Jest test suites covering authentication guards, profile updates, and claim state transitions.",
-      "Validated vector similarity queries against test item datasets containing synonym variations.",
-      "Performed integration tests ensuring invalid image formats (e.g., non-image binaries) are rejected at the upload boundary.",
+      "Authored automated integration tests using Jest and Supertest covering all REST endpoints, authentication token validation, and claim workflows.",
+      "Verified Pinecone similarity scoring across synthetic item descriptions with varied vocabulary and intentional spelling variations.",
+      "Tested Socket.io communication under simulated network disconnections, verifying message persistence and unread count reconciliation.",
+      "Conducted mobile UI smoke tests in Flutter verifying camera capture, image upload flows, and chat responsiveness.",
     ],
     resultsAndLessons: {
       completedWork: [
-        "Full RESTful backend API with authentication middleware and profile management.",
-        "PostgreSQL schema design with foreign key constraints across items, claims, and chat rooms.",
-        "Cloudinary signed media upload integration with thumbnail generation.",
-        "Hybrid matching pipeline incorporating SQL constraints and Pinecone vector search.",
-        "Flutter mobile application screens for item discovery, claim tracking, and chat.",
+        "Cross-platform Flutter mobile application featuring item discovery, claim flows, and real-time chat screens.",
+        "Node.js/Express REST backend with Firebase authentication token verification middleware.",
+        "PostgreSQL relational schema with normalized tables, foreign keys, and transaction guards.",
+        "Cloudinary signed upload integration with automated thumbnail generation.",
+        "Pinecone vector index integration providing semantic item description matching.",
+        "Socket.io real-time chat service with message persistence and unread tracking.",
+        "Content moderation and listing deactivation endpoints.",
       ],
       plannedWork: [
-        "Push notifications for instant match alerts when new matching listings are posted.",
-        "Automated optical character recognition (OCR) on uploaded receipts or serial numbers.",
+        "Background worker queue for asynchronous push notification delivery upon new potential matches.",
+        "Automated OCR scanning on uploaded receipts to extract serial numbers or purchase dates.",
       ],
       lessonsLearned: [
-        "Combining relational SQL constraints with vector embeddings provides much higher precision than either method alone.",
-        "Decoupling media storage from core database instances is vital for keeping relational backups small and agile.",
+        "A hybrid matching approach (deterministic SQL boundaries + vector similarity) is significantly more accurate than pure semantic search in localized domain applications.",
+        "Signed client-to-CDN media uploads save substantial backend bandwidth and isolate image processing risks from application servers.",
+        "Engineering Transparency Notice: Lostproject is documented according to its actual implementation; it does not claim multi-million user scalability, third-party security audits, or commercial deployment beyond verified test environments.",
       ],
     },
     architectureOverview:
@@ -393,84 +467,126 @@ export const projects: Project[] = [
     ],
     implementationDetails: [
       {
-        title: "Content Modeling & Taxonomy",
+        title: "Content Structure & Hierarchical Taxonomy",
         description:
-          "Travel content requires structured relationships between continents, countries, regional guides, and localized advice.",
+          "Travel content is organized into a scalable relational taxonomy reflecting real-world geography and traveler mindsets.",
         points: [
-          "Constructed hierarchical schemas connecting destinations to articles, practical tips, and travel seasons.",
-          "Standardized article metadata including reading time, difficulty ratings, and recommended visit durations.",
+          "Engineered hierarchical categorization linking continents to countries, regional destination guides, and city itineraries.",
+          "Standardized article metadata including reading duration, visa requirements, best seasonal visit windows, and budget tiers.",
+          "Established structured tagging for travel styles: solo travel, family vacations, budget exploration, and adventure itineraries.",
         ],
       },
       {
-        title: "Search & Attribute Filtering",
+        title: "Routing & Canonical URL Design",
         description:
-          "Visitors need to locate travel ideas based on various travel styles (solo, budget, adventure) or specific locations.",
+          "Constructed intuitive, SEO-friendly URL hierarchies reflecting the geographical content tree.",
         points: [
-          "Built multi-criteria filtering enabling users to narrow guides by region, budget, and season.",
-          "Implemented lightweight client-side caching to make category browsing instant.",
+          "Implemented clean RESTful URL paths such as '/destinations/[region]/[country]' and '/blog/[article-slug]'.",
+          "Configured canonical tag generation to eliminate duplicate content penalties across cross-tagged travel guides.",
+          "Handled trailing slash normalizations and route redirect mappings for relocated content paths.",
         ],
       },
       {
-        title: "Editorial Presentation & Responsive Design",
+        title: "Quick Trip Finder Filter Engine",
         description:
-          "Long-form travel guides require readable typography, scannable layouts, and fast asset loading.",
+          "An interactive discovery module allowing users to rapidly filter destinations by travel criteria.",
         points: [
-          "Developed fluid typography scale and balanced spacing systems across screen breakpoints.",
-          "Implemented lazy loading for editorial imagery to minimize initial page payload.",
+          "Built multi-attribute filtering logic resolving combinations of budget range, flight duration, season, and travel style.",
+          "Implemented client-side memoized filter evaluation ensuring instantaneous query updates without page reloads.",
+          "Provided fallback empty-state handling recommending adjacent alternative destinations when filter criteria are too restrictive.",
+        ],
+      },
+      {
+        title: "Search Engine Discoverability & Metadata",
+        description:
+          "Ensured search engines and social platforms accurately index and preview travel guides.",
+        points: [
+          "Dynamic generation of OpenGraph images, Twitter cards, and semantic meta tags per destination guide.",
+          "Structured JSON-LD schema markup for travel articles and breadcrumb navigation trails.",
+          "Semantic HTML5 hierarchy utilizing article, header, section, and nav elements with accessible landmarks.",
+        ],
+      },
+      {
+        title: "Responsive Editorial Design & Asset Optimization",
+        description:
+          "Editorial presentation prioritizes long-form reading comfort across mobile, tablet, and desktop displays.",
+        points: [
+          "Developed fluid typography scale and balanced spacing rules matching editorial literary standards.",
+          "Implemented responsive image delivery utilizing WebP formats, image srcsets, and lazy-loading for off-screen photography.",
+          "Optimized critical CSS delivery to maintain low first contentful paint (FCP) times on mobile connections.",
+        ],
+      },
+      {
+        title: "Deployment & Static Delivery",
+        description:
+          "Engineered the deployment topology for global edge distribution and high cache hit ratios.",
+        points: [
+          "Configured automated build and deployment pipelines serving pre-rendered static content over edge CDNs.",
+          "Established aggressive caching headers for static image assets while keeping content metadata revalidation agile.",
         ],
       },
     ],
     engineeringDecisions: [
       {
-        decision: "Modular Component Architecture",
+        decision: "Hierarchical Canonical URL Structure Over Query Strings",
         rationale:
-          "Breaking down travel cards, destination headers, and editorial blocks into reusable modules ensures visual consistency and maintainability.",
+          "Clean geographic path URLs (e.g. '/destinations/europe/italy') provide clear information scent for users and indexable keyword hierarchies for search engines, unlike opaque query strings.",
         alternativeConsidered:
-          "Monolithic page templates were rejected due to high code duplication across destination guides.",
+          "Single-page destination browsing with hash-based routing was rejected due to lack of individual search indexing and poor shareability.",
       },
       {
-        decision: "Static Asset Optimization Strategy",
+        decision: "Client-Side In-Memory Filtering for the Quick Trip Finder",
         rationale:
-          "Travel websites are media-heavy. Enforcing image sizing constraints and responsive image attributes prevents layout shifts.",
+          "Pre-loading the lightweight destination metadata index allows instant interactive filtering as users adjust budget and style sliders, eliminating repetitive network round-trips.",
         alternativeConsidered:
-          "Serving raw uncompressed photography was rejected due to mobile bandwidth constraints.",
+          "Server-side filter execution on every slider adjustment was evaluated, but added noticeable UI latency on fluctuating mobile connections.",
+      },
+      {
+        decision: "Decoupled Content Taxonomy from Presentation",
+        rationale:
+          "Separating destination metadata schemas from presentation components allows travel guides to be rendered across various page contexts (landing cards, detailed guides, and trip finder results) without code duplication.",
+        alternativeConsidered:
+          "Embedding content hardcoded within page templates was rejected to avoid maintainability bottlenecks.",
       },
     ],
     challengesAndTradeoffs: [
       {
-        challenge: "Balancing Visual Richness with Fast Mobile Page Loads",
+        challenge: "Balancing Media-Rich Photography with Mobile Page Weight",
         resolution:
-          "Adopted responsive image srcsets and prioritized critical CSS to ensure fast first contentful paint.",
+          "Enforced strict responsive image sizing, automated WebP conversion, and prioritized above-the-fold assets.",
         tradeOff:
-          "Requires asset pre-processing pipeline during content publishing.",
+          "Requires asset pre-processing pipeline and slight build-time compression overhead.",
       },
       {
-        challenge: "Managing Deep Destination Hierarchies",
+        challenge: "Deep Navigation Complexity on Small Viewports",
         resolution:
-          "Structured breadcrumbs and categorical sidebar navigation to keep users oriented.",
+          "Implemented accessible breadcrumb trails and collapsible geographic category drawers.",
         tradeOff:
-          "Slightly increased layout complexity on smaller mobile viewports.",
+          "Requires deliberate touch target spacing on mobile screens.",
       },
     ],
     testingAndValidation: [
-      "Tested layout responsiveness across mobile, tablet, and desktop browser viewports.",
-      "Verified navigation breadcrumbs and internal links across all destination hierarchies.",
+      "Tested layout responsiveness across mobile, tablet, and desktop browser viewports and varied screen densities.",
+      "Audited OpenGraph and Twitter card rendering using social metadata debuggers to verify link preview accuracy.",
+      "Verified navigation breadcrumbs and internal links across all destination hierarchies using link crawler scripts.",
       "Validated accessibility contrast scores across typography and interactive navigation elements.",
     ],
     resultsAndLessons: {
       completedWork: [
-        "Structured content architecture and data models for destinations and travel guides.",
-        "Multi-attribute search and destination category filtering system.",
-        "Fully responsive editorial layout and typography system.",
-        "Cross-browser tested interface with verified mobile navigation.",
+        "Fully responsive website architecture with editorial typography and layouts.",
+        "Structured destination taxonomy and content data models.",
+        "Interactive Quick Trip Finder module with multi-attribute filtering.",
+        "Clean, canonical routing hierarchy and dynamic SEO metadata generation.",
+        "Edge CDN asset delivery with responsive image optimization.",
       ],
       plannedWork: [
-        "Integration of live flight and accommodation fare comparison widgets.",
+        "Third-party flight and accommodation price comparison API widgets.",
         "Interactive destination mapping with downloadable offline itinerary summaries.",
       ],
       lessonsLearned: [
-        "Clear content hierarchies and information architecture are more important for usability than complex visual effects.",
-        "Consistent spacing and disciplined typography significantly elevate editorial credibility.",
+        "Thoughtful information architecture and URL design form the strongest foundation for long-term website discoverability.",
+        "Editorial readability depends heavily on consistent vertical rhythm and disciplined typography rather than visual ornament.",
+        "Engineering Transparency Notice: Airzigzag is documented strictly according to its implemented architecture; it does not claim commercial booking transactions, third-party GDS partnerships, or unverified traffic metrics.",
       ],
     },
     architectureOverview:
