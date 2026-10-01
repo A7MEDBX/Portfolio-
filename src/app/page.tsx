@@ -150,7 +150,7 @@ export default function HomePage() {
           {/* Eyebrow / Name & Role */}
           <div className="flex items-center gap-2 mb-3">
             <span className="text-xs uppercase tracking-widest font-mono text-[#2D4A3E] font-medium">
-              BEDO
+              Ahmed Ragab
             </span>
             <span className="text-xs font-mono text-[#686868]">/</span>
             <span className="text-xs uppercase tracking-widest font-mono text-[#686868] font-medium">

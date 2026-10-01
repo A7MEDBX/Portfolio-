@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Engineering case studies, backend architectures, and software applications developed by BEDO (Ahmed Ragab).",
+    "Engineering case studies, backend architectures, and software applications developed by Ahmed Ragab.",
 };
 
 export default function ProjectsPage() {
@@ -31,7 +31,7 @@ export default function ProjectsPage() {
       <PageHeader
         eyebrow="SELECTED WORK"
         title="Projects and engineering explorations."
-        subtitle="A concise introduction to the software systems, applications, and technical projects BEDO has worked on across distributed architectures, mobile backends, and data-driven systems."
+        subtitle="A concise introduction to the software systems, applications, and technical projects Ahmed Ragab has worked on across distributed architectures, mobile backends, and data-driven systems."
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]}
       />
 

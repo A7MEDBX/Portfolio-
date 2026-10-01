@@ -21,7 +21,7 @@ import {
 export const metadata: Metadata = {
   title: "Skills",
   description:
-    "Technical competencies, backend languages, databases, real-time messaging, and application development skills of BEDO (Ahmed Ragab).",
+    "Technical competencies, backend languages, databases, real-time messaging, and application development skills of Ahmed Ragab.",
 };
 
 export default function SkillsPage() {

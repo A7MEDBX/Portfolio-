@@ -32,7 +32,6 @@ export const metadata: Metadata = {
     "Backend Software Engineer specialized in distributed systems, robust APIs, and scalable backend architecture.",
   keywords: [
     "Ahmed Ragab",
-    "BEDO",
     "Backend Software Engineer",
     "Distributed Systems",
     "FastAPI",
