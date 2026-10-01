@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
+import { ProjectVisualPreview } from "@/components/home/ProjectVisualPreview";
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,6 +16,8 @@ import {
   Layers,
   Shield,
   FileCode2,
+  ExternalLink,
+  Code2,
 } from "lucide-react";
 
 interface ProjectPageProps {
@@ -96,8 +99,37 @@ export default async function ProjectCaseStudyPage({
             <span className="text-[#222222] font-medium">{project.category}</span>
           </div>
           <div>
-            <span className="text-[#686868] block mb-1">Codebase Access</span>
-            <span className="text-[#686868] italic">Proprietary / Internal</span>
+            <span className="text-[#686868] block mb-1">External Links</span>
+            <div className="flex items-center gap-2">
+              {project.repositoryUrl ? (
+                <a
+                  href={project.repositoryUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#2D4A3E] hover:underline underline-offset-4 flex items-center gap-1"
+                >
+                  <span>GitHub</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              ) : (
+                <span className="text-[#686868] italic">Internal</span>
+              )}
+
+              {project.liveUrl && (
+                <>
+                  <span className="text-[#E5E2DC]">•</span>
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#2D4A3E] hover:underline underline-offset-4 flex items-center gap-1"
+                  >
+                    <span>Website</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </PageHeader>
@@ -133,14 +165,27 @@ export default async function ProjectCaseStudyPage({
         <section className="border-t border-[#E5E2DC] pt-8">
           <h2 className="font-serif text-2xl font-normal text-[#222222] mb-4 flex items-center gap-2.5">
             <Cpu className="w-5 h-5 text-[#2D4A3E]" />
-            <span>The Problem & Engineering Constraints</span>
+            <span>The Problem Addressed</span>
           </h2>
           <p className="text-base text-[#686868] leading-relaxed">
             {project.problemStatement}
           </p>
         </section>
 
-        {/* Section 3: Architecture Diagram & Technical Model */}
+        {/* Section 3: My Contribution */}
+        <section className="border-t border-[#E5E2DC] pt-8">
+          <h2 className="font-serif text-2xl font-normal text-[#222222] mb-4 flex items-center gap-2.5">
+            <Code2 className="w-5 h-5 text-[#2D4A3E]" />
+            <span>My Contribution</span>
+          </h2>
+          <div className="bg-[#FAF9F6] border border-[#E5E2DC] p-6 rounded-xs">
+            <p className="text-base text-[#222222] font-sans leading-relaxed">
+              {project.contribution}
+            </p>
+          </div>
+        </section>
+
+        {/* Section 4: System Architecture & Visual Schematic */}
         <section className="border-t border-[#E5E2DC] pt-8">
           <h2 className="font-serif text-2xl font-normal text-[#222222] mb-2 flex items-center gap-2.5">
             <Shield className="w-5 h-5 text-[#2D4A3E]" />
@@ -150,13 +195,15 @@ export default async function ProjectCaseStudyPage({
             {project.architectureOverview}
           </p>
 
+          <ProjectVisualPreview slug={project.slug} />
+
           <ArchitectureDiagram
             title={`${project.title} — Topology`}
             type={diagramType}
           />
         </section>
 
-        {/* Section 4: Key Backend Responsibilities */}
+        {/* Section 5: Key Backend Responsibilities */}
         <section className="border-t border-[#E5E2DC] pt-8">
           <h2 className="font-serif text-2xl font-normal text-[#222222] mb-6 flex items-center gap-2.5">
             <FileCode2 className="w-5 h-5 text-[#2D4A3E]" />
@@ -174,7 +221,7 @@ export default async function ProjectCaseStudyPage({
           </ul>
         </section>
 
-        {/* Section 5: System Highlights & Technical Highlights */}
+        {/* Section 6: System Highlights & Technical Highlights */}
         <section className="border-t border-[#E5E2DC] pt-8">
           <h2 className="font-serif text-2xl font-normal text-[#222222] mb-6">
             Architectural Guarantees & Highlights

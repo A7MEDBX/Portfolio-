@@ -8,9 +8,11 @@ export interface Project {
   technologies: string[];
   summary: string;
   problemStatement: string;
+  contribution: string;
   architectureOverview: string;
   keyResponsibilities: string[];
   systemHighlights: string[];
+  featured?: boolean;
   repositoryUrl?: string;
   liveUrl?: string;
   documentationUrl?: string;
