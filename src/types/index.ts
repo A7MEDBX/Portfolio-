@@ -22,7 +22,7 @@ export interface Project {
   subtitle: string;
   category: string;
   timeline: string;
-  status: "Completed" | "Active" | "In Development" | "Archived";
+  status: "Completed" | "Active" | "In Development" | "Archived" | "Launched";
   technologies: string[];
   summary: string;
   problemStatement: string;
@@ -45,6 +45,16 @@ export interface Project {
   repositoryUrl?: string;
   liveUrl?: string;
   documentationUrl?: string;
+  announcementUrl?: string;
+  securityConsiderations?: {
+    implemented: string[];
+    recommendations: string[];
+  };
+  teamLeadership?: {
+    roleTitle: string;
+    responsibilities: string[];
+    leadershipNarrative: string;
+  };
 }
 
 export type ExperienceType =

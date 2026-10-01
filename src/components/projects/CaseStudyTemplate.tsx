@@ -19,6 +19,10 @@ import {
   AirzigzagUserJourneyVisual,
 } from "./AirzigzagVisuals";
 import {
+  IEEEAswanArchitectureVisual,
+  IEEEAswanPlaceholderVisual,
+} from "./IEEEAswanVisuals";
+import {
   ExternalLink,
   Layers,
   Cpu,
@@ -27,6 +31,9 @@ import {
   CheckCircle2,
   GitBranch,
   ShieldAlert,
+  ShieldCheck,
+  Lock,
+  Users,
   Beaker,
   CheckCircle,
   Clock,
@@ -85,7 +92,7 @@ export function CaseStudyTemplate({
           </div>
           <div>
             <span className="text-[#686868] block mb-1">Links & Access</span>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {project.repositoryUrl ? (
                 <a
                   href={project.repositoryUrl}
@@ -110,6 +117,21 @@ export function CaseStudyTemplate({
                     className="text-[#2D4A3E] hover:underline underline-offset-4 flex items-center gap-1 font-medium"
                   >
                     <span>Website</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </>
+              )}
+
+              {project.announcementUrl && (
+                <>
+                  <span className="text-[#E5E2DC]">•</span>
+                  <a
+                    href={project.announcementUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#2D4A3E] hover:underline underline-offset-4 flex items-center gap-1 font-medium"
+                  >
+                    <span>Announcement</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </>
@@ -209,6 +231,39 @@ export function CaseStudyTemplate({
           </div>
         </section>
 
+        {/* DEDICATED SECTION: LEADING THE WEB TEAM */}
+        {project.teamLeadership && (
+          <section className="border-t border-[#E5E2DC] pt-10">
+            <div className="flex items-center gap-2.5 mb-4">
+              <Users className="w-5 h-5 text-[#2D4A3E]" />
+              <h2 className="font-serif text-2xl font-normal text-[#222222]">
+                Leading the Web Team
+              </h2>
+            </div>
+            <div className="bg-[#FAF9F6] border border-[#E5E2DC] p-6 rounded-xs mb-6">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#2D4A3E] block mb-2 font-medium">
+                Leadership Context // {project.teamLeadership.roleTitle}
+              </span>
+              <p className="text-sm sm:text-base text-[#222222] font-sans leading-relaxed">
+                {project.teamLeadership.leadershipNarrative}
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xs font-mono uppercase tracking-wider text-[#686868] mb-3 font-medium">
+                Coordination, Code Review &amp; Task Distribution
+              </h3>
+              <ul className="space-y-3">
+                {project.teamLeadership.responsibilities.map((resp, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-[#222222] font-sans">
+                    <CheckCircle2 className="w-4 h-4 text-[#2D4A3E] mt-0.5 shrink-0" />
+                    <span className="leading-relaxed">{resp}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
         {/* 6. ARCHITECTURE DIAGRAM */}
         <section className="border-t border-[#E5E2DC] pt-10">
           <div className="flex items-center gap-2.5 mb-2">
@@ -236,6 +291,11 @@ export function CaseStudyTemplate({
             <div className="space-y-6">
               <AirzigzagArchitectureVisual />
               <AirzigzagUserJourneyVisual />
+            </div>
+          ) : project.slug === "ieee-aswan-student-branch" ? (
+            <div className="space-y-6">
+              <IEEEAswanArchitectureVisual />
+              <IEEEAswanPlaceholderVisual />
             </div>
           ) : (
             <div>
@@ -300,6 +360,57 @@ export function CaseStudyTemplate({
             ))}
           </div>
         </section>
+
+        {/* DEDICATED SECTION: SECURITY CONSIDERATIONS */}
+        {project.securityConsiderations && (
+          <section className="border-t border-[#E5E2DC] pt-10">
+            <div className="flex items-center gap-2.5 mb-6">
+              <Lock className="w-5 h-5 text-[#2D4A3E]" />
+              <h2 className="font-serif text-2xl font-normal text-[#222222]">
+                Security Considerations
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="border border-[#E5E2DC] bg-[#FAF9F6] p-6 rounded-xs">
+                <div className="flex items-center gap-2 mb-4 pb-2 border-b border-[#E5E2DC]">
+                  <ShieldCheck className="w-4 h-4 text-[#2D4A3E]" />
+                  <h3 className="font-serif text-base text-[#222222]">
+                    Implemented Measures
+                  </h3>
+                </div>
+                <ul className="space-y-3 text-xs sm:text-sm text-[#222222] font-sans">
+                  {project.securityConsiderations.implemented.map((m, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] mt-2 shrink-0" />
+                      <span className="leading-relaxed">{m}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="border border-[#E5E2DC] bg-[#F7F5F0] p-6 rounded-xs">
+                <div className="flex items-center gap-2 mb-4 pb-2 border-b border-[#E5E2DC]">
+                  <ShieldAlert className="w-4 h-4 text-[#686868]" />
+                  <h3 className="font-serif text-base text-[#222222]">
+                    Recommendations &amp; Future Improvements
+                  </h3>
+                </div>
+                <ul className="space-y-3 text-xs sm:text-sm text-[#686868] font-sans">
+                  {project.securityConsiderations.recommendations.map((r, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#686868] mt-2 shrink-0" />
+                      <span className="leading-relaxed">{r}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-[11px] font-mono text-[#686868] mt-5 pt-3 border-t border-[#E5E2DC] italic">
+                  Note: The system is documented strictly by its implemented controls and does not claim independent third-party penetration certification.
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* 9. IMPORTANT ENGINEERING DECISIONS */}
         <section className="border-t border-[#E5E2DC] pt-10">

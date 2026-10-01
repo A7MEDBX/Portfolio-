@@ -322,5 +322,66 @@ export function ProjectVisualPreview({ slug }: ProjectVisualPreviewProps) {
     );
   }
 
+  if (slug === "ieee-aswan-student-branch") {
+    return (
+      <div className="w-full border border-[#E5E2DC] bg-[#FAF9F6] p-4 sm:p-5 rounded-xs my-4 overflow-hidden">
+        <div className="flex items-center justify-between text-[11px] font-mono text-[#686868] border-b border-[#E5E2DC] pb-2 mb-3">
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E]" />
+            SYSTEM PREVIEW: MERN FULL-STACK PLATFORM &amp; RBAC
+          </span>
+          <span className="text-[#2D4A3E] font-medium">LAUNCHED PLATFORM</span>
+        </div>
+
+        <div className="w-full overflow-x-auto">
+          <svg
+            viewBox="0 0 680 140"
+            className="w-full min-w-[540px] text-xs font-mono"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Box 1: React / Vite SPA */}
+            <rect x="10" y="25" width="140" height="90" rx="2" fill="#F5F3EE" stroke="#2D4A3E" strokeWidth="1.2" />
+            <text x="80" y="52" textAnchor="middle" fill="#222222" fontWeight="600" fontSize="11">React + Vite</text>
+            <text x="80" y="70" textAnchor="middle" fill="#686868" fontSize="9.5">Public &amp; Board UI</text>
+            <text x="80" y="86" textAnchor="middle" fill="#2D4A3E" fontSize="9">Framer Motion</text>
+            <text x="80" y="100" textAnchor="middle" fill="#686868" fontSize="8.5">Recharts Analytics</text>
+
+            {/* Link 1 */}
+            <path d="M150 70 L195 70" stroke="#2D4A3E" strokeWidth="1.2" />
+            <polygon points="195,70 188,67 188,73" fill="#2D4A3E" />
+            <text x="172" y="63" textAnchor="middle" fill="#686868" fontSize="8">HTTPS / JWT</text>
+
+            {/* Box 2: Node.js Express API */}
+            <rect x="195" y="25" width="150" height="90" rx="2" fill="#F5F3EE" stroke="#E5E2DC" strokeWidth="1.2" />
+            <text x="270" y="52" textAnchor="middle" fill="#222222" fontWeight="600" fontSize="11">Express.js API</text>
+            <text x="270" y="70" textAnchor="middle" fill="#686868" fontSize="9.5">JWT Auth &amp; RBAC</text>
+            <text x="270" y="86" textAnchor="middle" fill="#2D4A3E" fontSize="9">Rate Limiting / Sanitization</text>
+            <text x="270" y="100" textAnchor="middle" fill="#686868" fontSize="8.5">Event &amp; Inquiry Routes</text>
+
+            {/* Link 2 */}
+            <path d="M345 70 L390 70" stroke="#2D4A3E" strokeWidth="1.2" />
+            <polygon points="390,70 383,67 383,73" fill="#2D4A3E" />
+            <text x="367" y="63" textAnchor="middle" fill="#686868" fontSize="8">Mongoose</text>
+
+            {/* Box 3: MongoDB Persistence */}
+            <rect x="390" y="25" width="145" height="90" rx="2" fill="#FAF9F6" stroke="#2D4A3E" strokeWidth="1.2" />
+            <text x="462" y="52" textAnchor="middle" fill="#222222" fontWeight="600" fontSize="11">MongoDB</text>
+            <text x="462" y="70" textAnchor="middle" fill="#686868" fontSize="9.5">Events &amp; Registrations</text>
+            <text x="462" y="86" textAnchor="middle" fill="#2D4A3E" fontSize="9">Member Archives</text>
+            <text x="462" y="100" textAnchor="middle" fill="#686868" fontSize="8.5">Inquiries &amp; Gallery</text>
+
+            {/* Box 4: Operational Leadership */}
+            <rect x="545" y="25" width="125" height="90" rx="2" fill="#F5F3EE" stroke="#E5E2DC" strokeWidth="1.2" />
+            <text x="607" y="52" textAnchor="middle" fill="#222222" fontWeight="600" fontSize="10.5">Team Leadership</text>
+            <text x="607" y="70" textAnchor="middle" fill="#686868" fontSize="9">Head of Web Team</text>
+            <text x="607" y="86" textAnchor="middle" fill="#2D4A3E" fontSize="8.5">Sprint Coordination</text>
+            <text x="607" y="100" textAnchor="middle" fill="#686868" fontSize="8.5">Code Review</text>
+          </svg>
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }

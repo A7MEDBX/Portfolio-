@@ -39,6 +39,7 @@ export const skillCategories: SkillCategory[] = [
     relevantProjects: [
       { title: "SAMCS — Autonomous Metro Platform", href: "/projects/samcs" },
       { title: "Lostproject — Mobile Backend", href: "/projects/lostproject" },
+      { title: "IEEE Aswan — MERN API & RBAC", href: "/projects/ieee-aswan-student-branch" },
       { title: "Airzigzag — Travel Architecture", href: "/projects/airzigzag" },
       { title: "Sport Club Management System", href: "/projects/sport-club-management" },
     ],
@@ -187,6 +188,7 @@ export const skillCategories: SkillCategory[] = [
       "Advanced Flutter state management patterns (Bloc / Riverpod)",
     ],
     relevantProjects: [
+      { title: "IEEE Aswan — Student Branch Web Platform", href: "/projects/ieee-aswan-student-branch" },
       { title: "Lostproject — Flutter Mobile Client", href: "/projects/lostproject" },
       { title: "Sport Club Management — React UI", href: "/projects/sport-club-management" },
       { title: "Hospital Management — C++/Qt Desktop", href: "/projects/hospital-management-system" },

@@ -599,6 +599,210 @@ export const projects: Project[] = [
     liveUrl: "https://airzigzag.com",
   },
   {
+    slug: "ieee-aswan-student-branch",
+    title: "IEEE Aswan Student Branch Website",
+    subtitle:
+      "Collaborative full-stack web platform powering public presence, event registrations, and administrative operations.",
+    category: "Full-Stack Web Platform",
+    timeline: "2023 — 2024",
+    status: "Launched",
+    featured: true,
+    technologies: [
+      "MongoDB",
+      "Express.js",
+      "React",
+      "Node.js",
+      "Vite",
+      "JWT Authentication",
+      "Framer Motion",
+      "Recharts",
+      "REST APIs",
+      "Role-Based Access Control",
+    ],
+    summary:
+      "A comprehensive full-stack redesign and launch of the IEEE Aswan Student Branch web platform, providing student members, attendees, and operational committees with verified event registrations, responsive community content, and role-based administrative dashboards.",
+    problemStatement:
+      "The student branch required a modern, unified digital presence capable of presenting activities and technical workshops to the student body while replacing disorganized external spreadsheets with a centralized administrative system for registration reviews, event coordination, and persistent community inquiries.",
+    objectives: [
+      "Design and deliver a responsive, accessible public web interface representing IEEE Aswan's technical tracks, executive committee, and community activities.",
+      "Implement secure JWT authentication and role-based authorization distinguishing public visitors, branch members, and administrative officers.",
+      "Build structured event registration pipelines featuring multi-step applicant data collection and officer verification workflows.",
+      "Establish persistent data storage in MongoDB for member archives, event rosters, contact inquiries, and sponsor management.",
+      "Lead and coordinate the student branch web development team through collaborative coding conventions, code reviews, and task distribution.",
+    ],
+    systemOverview:
+      "The platform is built on the MERN stack with a React/Vite single-page application communicating over HTTPS with a modular Express.js/Node.js API backend. MongoDB serves as the persistent document database. The application incorporates cross-cutting authentication guards (JSON Web Tokens) and role-based access control (RBAC) to protect administrative endpoints, with Framer Motion delivering interface transitions and Recharts visualizing event registration statistics.",
+    contribution:
+      "Served as Head of the Web Team, leading the collaborative development lifecycle, establishing backend architectural patterns, overseeing task allocation and code reviews, and implementing core authentication, database persistence, and administrative review workflows.",
+    keyResponsibilities: [
+      "Led the web team throughout the project lifecycle, defining technical milestones, sprint task distributions, and coding standards.",
+      "Architected backend Express.js route structures, MongoDB Mongoose data schemas, and role-based authorization middleware.",
+      "Implemented secure JWT session management, input validation sanitization, and rate-limiting guards against automated submissions.",
+      "Engineered administrative dashboard views integrating Recharts for real-time registration data visualization and attendee verification.",
+      "Conducted thorough pull request code reviews to ensure consistency across frontend components and backend controller logic.",
+    ],
+    teamLeadership: {
+      roleTitle: "Head of the Web Team",
+      leadershipNarrative:
+        "Leading the IEEE Aswan web team required balancing technical engineering with team coordination, mentoring junior student contributors, and aligning technical milestones with branch leadership expectations. Emphasizing clean separation of responsibilities, predictable Git collaboration workflows, and regular code reviews ensured the team delivered a cohesive, maintainable platform rather than fragmented modules.",
+      responsibilities: [
+        "Task Distribution & Sprint Coordination: Deconstructed platform requirements into well-defined modular tasks distributed across team members based on specialization.",
+        "Code Quality & Pull Request Reviews: Enforced consistent linting, uniform formatting, and defensive input validation across all merged contributions.",
+        "Architectural Governance: Guided the team on API contract design, MongoDB relationship structures, and state management conventions.",
+        "Cross-Committee Collaboration: Liaised with branch officers and event organizers to gather operational requirements for registration verification and media archives.",
+      ],
+    },
+    securityConsiderations: {
+      implemented: [
+        "JSON Web Token (JWT) Authentication: Stateless bearer token authentication verifying client identity across administrative API endpoints.",
+        "Role-Based Access Control (RBAC): Middleware guards enforcing strict privilege boundaries between public visitors, verified members, and board administrators.",
+        "Express Rate Limiting: Protection against brute-force authentication attempts and high-frequency automated form submissions.",
+        "Defensive Input Sanitization: Server-side validation filtering malicious payloads and guarding against NoSQL injection vectors.",
+        "Secure HTTP Headers: Helmet middleware configuring X-Content-Type-Options, frameguard, and cross-site scripting filters.",
+      ],
+      recommendations: [
+        "Automated Secret Rotation & Refresh Tokens: Implement rotating refresh tokens with short-lived access token lifecycles in future release iterations.",
+        "Comprehensive Audit Logging: Introduce immutable access logging for sensitive administrative actions and privilege elevation.",
+        "Independent Penetration Testing: Conduct third-party vulnerability audits before high-traffic regional event rollouts.",
+      ],
+    },
+    implementationDetails: [
+      {
+        title: "Responsive Public Website & Editorial Layout",
+        description:
+          "The public-facing interface serves as the primary gateway for university students, prospective members, and external partners.",
+        points: [
+          "Developed fluid, mobile-first responsive layouts in React with Vite for fast client compilation and minimal bundle overhead.",
+          "Integrated Framer Motion for tasteful, performance-conscious micro-interactions and page transitions across key sections.",
+          "Organized clear editorial sections presenting branch history, active technical chapters, executive board rosters, and upcoming workshop calendars.",
+        ],
+      },
+      {
+        title: "Authentication & Role-Based Session Architecture",
+        description:
+          "A multi-tiered authorization model secures administrative operations while preserving friction-free access for public visitors.",
+        points: [
+          "Implemented stateless JWT bearer token workflows with client-side credential storage and automatic session expiry handling.",
+          "Engineered reusable Express middleware inspecting token claims and verifying role permissions (Admin, Board, Member) before routing.",
+          "Protected sensitive routes against unauthorized deep linking with client-side navigation guards and server-side authorization enforcement.",
+        ],
+      },
+      {
+        title: "Event Registration & Verification Pipeline",
+        description:
+          "Replacing ad-hoc external forms with a self-hosted, verified registration mechanism tailored to branch event logistics.",
+        points: [
+          "Designed multi-step registration forms with client-side input validation and server-side duplicate check constraints.",
+          "Constructed administrative verification workflows allowing officers to review participant submissions and approve tickets.",
+          "Integrated Recharts data visualization components rendering event attendance distributions and registration velocity over time.",
+        ],
+      },
+      {
+        title: "Inquiry Management & Media Archives",
+        description:
+          "Centralized data ingestion for community questions, sponsor recognition, and historical branch activities.",
+        points: [
+          "Engineered contact form pipelines persisting incoming questions into MongoDB with status flags (New, In Review, Resolved).",
+          "Structured media gallery collections organizing photo highlights from past engineering competitions and workshops.",
+          "Built sponsor management components providing prominent, structured placement for corporate and academic branch partners.",
+        ],
+      },
+    ],
+    engineeringDecisions: [
+      {
+        decision: "MERN Stack Architecture with Vite",
+        rationale:
+          "React with Vite provides rapid client build cycles and responsive SPA navigation, paired with Express and Node.js for straightforward JavaScript full-stack development that allowed student contributors to collaborate effectively across the stack.",
+        alternativeConsidered:
+          "A multi-page server-rendered framework was evaluated, but a React SPA was selected to deliver dynamic administrative dashboards and smooth interactive transitions without page reloads.",
+      },
+      {
+        decision: "Stateless JWT Authentication with Role Middleware",
+        rationale:
+          "Stateless token validation avoids server-side session memory consumption and simplifies role verification across distinct administrative route groups.",
+        alternativeConsidered:
+          "Server-side session stores in Redis were considered, but avoided to minimize operational infrastructure complexity for student branch hosting.",
+      },
+      {
+        decision: "Document-Based MongoDB Persistence for Flexible Event Schemas",
+        rationale:
+          "Different branch events (technical workshops vs. hackathons) often require variable registration questionnaire fields. MongoDB's flexible schema models accommodate schema variations without heavy migration overhead.",
+        alternativeConsidered:
+          "Relational PostgreSQL was evaluated, but document flexibility for dynamic questionnaire forms provided greater adaptability for evolving student committee needs.",
+      },
+    ],
+    challengesAndTradeoffs: [
+      {
+        challenge: "Authentication & Authorization Boundary Enforcement",
+        resolution:
+          "Designed layered middleware separating token signature verification from granular permission checks, ensuring routes fail closed by default.",
+        tradeOff:
+          "Requires strict maintenance of role claims across both frontend route guards and backend endpoint handlers.",
+      },
+      {
+        challenge: "Event Registration & Verification Workflows",
+        resolution:
+          "Constructed distinct status stages (Submitted, Under Review, Confirmed, Waitlisted) preventing race conditions during popular workshop signups.",
+        tradeOff:
+          "Requires operational vigilance by committee members to manually review submissions before triggering confirmations.",
+      },
+      {
+        challenge: "Persistent Inquiry Management & Follow-Up",
+        resolution:
+          "Implemented state tracking flags on incoming contact inquiries to prevent duplicate replies from multiple committee officers.",
+        tradeOff:
+          "Adds minimal database storage overhead compared to ephemeral stateless email relays.",
+      },
+      {
+        challenge: "Administrative Functionality & Analytics Latency",
+        resolution:
+          "Aggregated attendee statistics via MongoDB aggregation pipelines and cached chart metrics for the Recharts dashboard.",
+        tradeOff:
+          "Dashboard metrics reflect slightly batched data rather than true real-time sub-second streams.",
+      },
+      {
+        challenge: "Maintainability & Future Codebase Growth Across Student Cohorts",
+        resolution:
+          "Established comprehensive code documentation, modular directory conventions, and automated linting so future incoming web teams can inherit the codebase seamlessly.",
+        tradeOff:
+          "Demanded significant upfront effort in code review and architecture standardization during active sprint cycles.",
+      },
+    ],
+    testingAndValidation: [
+      "Conducted comprehensive manual and automated endpoint testing verifying role permission barriers on administrative routes.",
+      "Tested event registration workflows under concurrent submission attempts to ensure duplicate email constraints are strictly enforced.",
+      "Validated form input sanitization against common XSS and NoSQL injection payloads.",
+      "Verified responsive layout rendering and navigation drawer functionality across mobile, tablet, and desktop browser viewports.",
+    ],
+    resultsAndLessons: {
+      completedWork: [
+        "Fully responsive public website launched for the IEEE Aswan Student Branch.",
+        "Role-based administrative dashboard with Recharts analytics and Framer Motion transitions.",
+        "Stateless JWT authentication and authorization middleware protecting privileged actions.",
+        "Event registration pipeline with committee verification and duplicate protection.",
+        "Persistent inquiry management, media gallery, and sponsor showcase in MongoDB.",
+      ],
+      plannedWork: [
+        "Automated email notification triggers for registration confirmation receipts.",
+        "Public member verification directory with QR code badge scanning for physical event check-in.",
+      ],
+      lessonsLearned: [
+        "Clear architectural boundaries and collaborative code standards are essential when leading student engineering teams with diverse experience levels.",
+        "Security must be built into route handlers from the beginning rather than patched in post-launch.",
+        "Engineering Transparency Notice: This case study reflects the implemented and launched web platform as documented in the public announcement; it does not claim unverified user traffic metrics or independent third-party penetration certification.",
+      ],
+    },
+    architectureOverview:
+      "A MERN stack web platform comprising a React/Vite single-page application communicating over RESTful APIs with an Express.js/Node.js backend. MongoDB provides persistent document storage, while JWT authentication and role-based access control operate as cross-cutting concerns protecting administrative and committee operations.",
+    systemHighlights: [
+      "Role-based administrative dashboards with interactive Recharts registration telemetry.",
+      "Secure JWT authentication, rate limiting, and defensive input sanitization.",
+      "Coordinated and delivered under student engineering leadership as Head of the Web Team.",
+    ],
+    announcementUrl:
+      "https://www.linkedin.com/posts/mahmoud-ayman-ez_ieee-ieeeaswan-webdevelopment-ugcPost-7445887604815765504-G8Lp/",
+  },
+  {
     slug: "sport-club-management",
     title: "Sport Club Management System",
     subtitle: "Club administration platform managing facility reservations, memberships, and OTP-secured authentication.",
