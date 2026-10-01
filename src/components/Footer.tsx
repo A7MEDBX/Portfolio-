@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { siteConfig } from "@/data/siteConfig";
 import { Container } from "./Container";
-import { ExternalLink, Mail } from "lucide-react";
+import { ExternalLink, Mail, Phone } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -13,11 +13,17 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           {/* Identity & Copyright */}
           <div>
-            <p className="font-serif text-[#222222] font-medium text-base">
-              {siteConfig.name}
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="font-serif text-[#222222] font-medium text-base">
+                {siteConfig.name}
+              </p>
+              <span className="inline-flex items-center gap-1 text-[10px] font-mono text-[#2D4A3E] bg-[#EEF3F0] px-1.5 py-0.5 rounded-xs border border-[#2D4A3E]/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] animate-pulse" />
+                {siteConfig.availability || "Open for Work"}
+              </span>
+            </div>
             <p className="text-xs text-[#686868] mt-1 font-sans">
-              {siteConfig.role} — Editorial portfolio & engineering case studies.
+              {siteConfig.role} — Based in {siteConfig.location}
             </p>
             <p className="text-xs text-[#686868]/80 font-mono mt-2">
               © {currentYear} {siteConfig.name}. All rights reserved.
@@ -33,6 +39,16 @@ export function Footer() {
               <Mail className="w-3.5 h-3.5 text-[#686868]" aria-hidden="true" />
               <span>{siteConfig.email}</span>
             </Link>
+
+            {siteConfig.phone && (
+              <a
+                href={`tel:${siteConfig.phone}`}
+                className="flex items-center gap-1.5 text-[#686868] hover:text-[#222222] transition-colors"
+              >
+                <Phone className="w-3.5 h-3.5 text-[#686868]" aria-hidden="true" />
+                <span>{siteConfig.phone}</span>
+              </a>
+            )}
 
             <a
               href={siteConfig.github}

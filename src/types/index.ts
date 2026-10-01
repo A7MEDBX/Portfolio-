@@ -109,6 +109,9 @@ export interface SiteConfig {
   tagline: string;
   bioShort: string;
   location: string;
+  availability?: string;
+  phone?: string;
+  phoneFormatted?: string;
   email: string;
   github: string;
   linkedin: string;

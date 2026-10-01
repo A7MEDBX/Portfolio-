@@ -22,18 +22,25 @@ export function Navbar() {
     <header className="sticky top-0 z-50 bg-[#FAF9F6]/95 backdrop-blur-xs border-b border-[#E5E2DC]">
       <Container>
         <div className="flex items-center justify-between h-16">
-          {/* Brand Name */}
-          <Link
-            href="/"
-            className="group flex items-baseline gap-2 text-[#222222] hover:text-[#2D4A3E] transition-colors"
-          >
-            <span className="font-serif text-lg tracking-tight font-medium">
-              {siteConfig.name}
+          {/* Brand Name & Availability */}
+          <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="group flex items-baseline gap-2 text-[#222222] hover:text-[#2D4A3E] transition-colors"
+            >
+              <span className="font-serif text-lg tracking-tight font-medium">
+                {siteConfig.name}
+              </span>
+              <span className="hidden sm:inline text-xs font-mono text-[#686868] font-normal">
+                / Backend Engineer
+              </span>
+            </Link>
+
+            <span className="hidden lg:inline-flex items-center gap-1.5 text-[10px] font-mono font-medium text-[#2D4A3E] bg-[#EEF3F0] border border-[#2D4A3E]/20 px-2 py-0.5 rounded-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] animate-pulse" />
+              Open for Work
             </span>
-            <span className="hidden sm:inline text-xs font-mono text-[#686868] font-normal">
-              / Backend Engineer
-            </span>
-          </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <nav

@@ -6,10 +6,12 @@ export const siteConfig: SiteConfig = {
   tagline: "Building resilient distributed systems, robust APIs, and scalable backend architectures.",
   bioShort:
     "Backend Software Engineer specialized in designing fault-tolerant services, efficient data pipelines, and high-performance server architectures.",
-  location: "Cairo, Egypt",
-  // Clear placeholders without inventing false credentials
-  email: "contact@ahmedragab.dev",
-  github: "https://github.com",
+  location: "Luxor, Egypt",
+  availability: "Open for Work",
+  phone: "01007184732",
+  phoneFormatted: "+20 100 718 4732",
+  email: "ahmedbod50@gmail.com",
+  github: "https://github.com/A7MEDBX",
   linkedin: "https://www.linkedin.com/in/am-ragab",
   navLinks: [
     { name: "Home", href: "/" },

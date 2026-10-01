@@ -147,14 +147,23 @@ export default function HomePage() {
       {/* 1. HERO SECTION */}
       <section className="border-b border-[#E5E2DC] pb-14 mb-16">
         <div className="max-w-3xl">
-          {/* Eyebrow / Name & Role */}
-          <div className="flex items-center gap-2 mb-3">
+          {/* Eyebrow / Name & Role & Status */}
+          <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className="text-xs uppercase tracking-widest font-mono text-[#2D4A3E] font-medium">
               Ahmed Ragab
             </span>
             <span className="text-xs font-mono text-[#686868]">/</span>
             <span className="text-xs uppercase tracking-widest font-mono text-[#686868] font-medium">
               Backend Software Engineer
+            </span>
+            <span className="text-xs font-mono text-[#686868]">/</span>
+            <span className="text-xs font-mono text-[#686868]">
+              Luxor, Egypt
+            </span>
+            <span className="text-xs font-mono text-[#686868]">/</span>
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-medium text-[#2D4A3E] bg-[#EEF3F0] border border-[#2D4A3E]/25 px-2 py-0.5 rounded-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] animate-pulse" />
+              Open for Work
             </span>
           </div>
 
