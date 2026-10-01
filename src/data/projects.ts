@@ -6,7 +6,7 @@ export const projects: Project[] = [
     title: "SAMCS — Smart Autonomous Metro Control & Monitoring Platform",
     subtitle: "Real-time supervisory telemetry, autonomous transit coordination, and hardware gateway integration.",
     category: "Distributed Systems & Telemetry",
-    timeline: "2024 — Present",
+    timeline: "2026",
     status: "Active",
     featured: true,
     technologies: [
@@ -221,14 +221,14 @@ export const projects: Project[] = [
       "Decoupled event pipeline separating real-time alerting from historical auditing.",
       "Sub-second state synchronization across dispatcher WebSocket connections.",
     ],
-    repositoryUrl: "https://github.com",
+    repositoryUrl: "https://github.com/A7MEDBX",
   },
   {
     slug: "lostproject",
     title: "Lostproject",
     subtitle: "Mobile application and backend service for asset recovery, attribute matching, and direct messaging.",
     category: "Mobile Backend & Platform",
-    timeline: "2023 — 2024",
+    timeline: "2025 — 2026",
     status: "Completed",
     featured: true,
     technologies: [
@@ -428,14 +428,14 @@ export const projects: Project[] = [
       "Secure image storage pipeline isolating media uploads from relational database records.",
       "Structured authentication guards protecting user contact information during recovery claims.",
     ],
-    repositoryUrl: "https://github.com",
+    repositoryUrl: "https://github.com/A7MEDBX",
   },
   {
     slug: "airzigzag",
     title: "Airzigzag",
     subtitle: "Travel-focused website and destination content platform with structured website architecture.",
     category: "Web Architecture & Content",
-    timeline: "2023",
+    timeline: "2025 — 2026",
     status: "Completed",
     featured: true,
     technologies: [
@@ -604,7 +604,7 @@ export const projects: Project[] = [
     subtitle:
       "Collaborative full-stack web platform powering public presence, event registrations, and administrative operations.",
     category: "Full-Stack Web Platform",
-    timeline: "2023 — 2024",
+    timeline: "2025 — 2026",
     status: "Launched",
     featured: true,
     technologies: [
@@ -809,7 +809,7 @@ export const projects: Project[] = [
     subtitle:
       "Competitive programming event featuring a qualification round and a double-elimination duel tournament.",
     category: "Competition Design & Event Operations",
-    timeline: "2024",
+    timeline: "2025 — 2026",
     status: "Completed",
     featured: true,
     roleTitle: "Head of the Competition",
@@ -982,7 +982,7 @@ export const projects: Project[] = [
     title: "Sport Club Management System",
     subtitle: "Club administration platform managing facility reservations, memberships, and OTP-secured authentication.",
     category: "Full-Stack System",
-    timeline: "2022 — 2023",
+    timeline: "2025 — 2026",
     status: "Completed",
     featured: false,
     technologies: [
@@ -1093,14 +1093,14 @@ export const projects: Project[] = [
       "Secure OTP verification flow for member logins and sensitive reservation updates.",
       "Simple, lightweight relational architecture with zero external operational dependencies.",
     ],
-    repositoryUrl: "https://github.com",
+    repositoryUrl: "https://github.com/A7MEDBX",
   },
   {
     slug: "egyptian-law-ai-chatbot",
     title: "Egyptian Law AI Chatbot",
     subtitle: "Legal document processing and question-answering assistant for Egyptian statutory documents.",
     category: "Document Processing & AI",
-    timeline: "2024",
+    timeline: "2025 — 2026",
     status: "In Development",
     featured: false,
     technologies: [
@@ -1210,14 +1210,14 @@ export const projects: Project[] = [
       "Preservation of statutory article numbers during OCR processing and chunking.",
       "Context-grounded query answering aimed at minimizing legal text hallucinations.",
     ],
-    repositoryUrl: "https://github.com",
+    repositoryUrl: "https://github.com/A7MEDBX",
   },
   {
     slug: "hospital-management-system",
     title: "Hospital Management System",
     subtitle: "Desktop clinical administration application managing patient records and appointments.",
     category: "Desktop Application",
-    timeline: "2022",
+    timeline: "2025 — 2026",
     status: "Completed",
     featured: false,
     technologies: [
@@ -1326,6 +1326,6 @@ export const projects: Project[] = [
       "High-performance native desktop execution with zero network latency.",
       "Local relational database with full data persistence and backup capabilities.",
     ],
-    repositoryUrl: "https://github.com",
+    repositoryUrl: "https://github.com/A7MEDBX",
   },
 ];

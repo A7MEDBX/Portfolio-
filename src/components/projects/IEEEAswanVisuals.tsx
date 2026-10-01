@@ -154,9 +154,10 @@ export function IEEEAswanPlaceholderVisual() {
                 href="https://ieeeasw.dev"
                 target="_blank"
                 rel="noopener noreferrer"
+                title="IEEE Aswan Student Branch Platform"
                 className="text-[#2D4A3E] hover:underline underline-offset-4 font-mono font-normal inline-flex items-center gap-1"
               >
-                <span>https://ieeeasw.dev</span>
+                <span>ieeeasw.dev</span>
                 <Globe className="w-3.5 h-3.5" />
               </a>
             </p>

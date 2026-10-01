@@ -239,6 +239,7 @@ export function ContactInteractive() {
             href={siteConfig.github}
             target="_blank"
             rel="noopener noreferrer"
+            title="GitHub Profile"
             className="group p-4 bg-white border border-[#E5E2DC] hover:border-[#2D4A3E]/40 hover:bg-[#FAF9F6] rounded-xs transition-all block"
           >
             <div className="flex items-center justify-between mb-1.5">
@@ -251,7 +252,7 @@ export function ContactInteractive() {
               <ExternalLink className="w-3 h-3 text-[#686868] group-hover:text-[#2D4A3E] transition-colors" />
             </div>
             <div className="font-mono text-sm font-medium text-[#222222] group-hover:text-[#2D4A3E] transition-colors">
-              github.com/A7MEDBX
+              GitHub Profile
             </div>
             <p className="text-[11px] text-[#686868] mt-1 font-sans">
               Inspect repositories, architecture implementations, and git commits.
@@ -263,6 +264,7 @@ export function ContactInteractive() {
             href={siteConfig.linkedin}
             target="_blank"
             rel="noopener noreferrer"
+            title="LinkedIn Profile"
             className="group p-4 bg-white border border-[#E5E2DC] hover:border-[#2D4A3E]/40 hover:bg-[#FAF9F6] rounded-xs transition-all block"
           >
             <div className="flex items-center justify-between mb-1.5">
@@ -275,7 +277,7 @@ export function ContactInteractive() {
               <ExternalLink className="w-3 h-3 text-[#686868] group-hover:text-[#2D4A3E] transition-colors" />
             </div>
             <div className="font-mono text-sm font-medium text-[#222222] group-hover:text-[#2D4A3E] transition-colors">
-              linkedin.com/in/am-ragab
+              LinkedIn Profile
             </div>
             <p className="text-[11px] text-[#686868] mt-1 font-sans">
               Connect professionally, review network updates, and explore background.

@@ -103,9 +103,10 @@ export function CaseStudyTemplate({
                   href={project.repositoryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  title="GitHub Profile & Repositories"
                   className="text-[#2D4A3E] hover:underline underline-offset-4 flex items-center gap-1 font-medium"
                 >
-                  <span>GitHub</span>
+                  <span>GitHub Profile</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               ) : (
@@ -119,9 +120,10 @@ export function CaseStudyTemplate({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    title="Live Platform"
                     className="text-[#2D4A3E] hover:underline underline-offset-4 flex items-center gap-1 font-medium"
                   >
-                    <span>Website</span>
+                    <span>Live Platform</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </>
@@ -134,9 +136,10 @@ export function CaseStudyTemplate({
                     href={project.announcementUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    title="Public Announcement on LinkedIn"
                     className="text-[#2D4A3E] hover:underline underline-offset-4 flex items-center gap-1 font-medium"
                   >
-                    <span>Announcement</span>
+                    <span>LinkedIn Announcement</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </>

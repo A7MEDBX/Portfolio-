@@ -97,6 +97,7 @@ export default function ContactPage() {
                   href={siteConfig.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
+                  title="LinkedIn Profile"
                   className="text-sm font-medium text-[#222222] hover:text-[#2D4A3E] hover:underline underline-offset-4 flex items-center justify-between"
                 >
                   <span>LinkedIn Profile</span>
@@ -119,9 +120,10 @@ export default function ContactPage() {
                   href={siteConfig.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  title="GitHub Profile"
                   className="text-sm font-medium text-[#222222] hover:text-[#2D4A3E] hover:underline underline-offset-4 flex items-center justify-between"
                 >
-                  <span>github.com/A7MEDBX</span>
+                  <span>GitHub Profile</span>
                   <span className="text-[11px] text-[#686868] font-sans">Inspect Code →</span>
                 </a>
               </li>

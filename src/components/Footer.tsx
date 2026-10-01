@@ -54,9 +54,10 @@ export function Footer() {
               href={siteConfig.github}
               target="_blank"
               rel="noopener noreferrer"
+              title="GitHub Profile"
               className="flex items-center gap-1.5 text-[#686868] hover:text-[#222222] transition-colors"
             >
-              <span>GitHub</span>
+              <span>GitHub Profile</span>
               <ExternalLink className="w-3 h-3 text-[#686868]" aria-hidden="true" />
             </a>
 
@@ -64,9 +65,10 @@ export function Footer() {
               href={siteConfig.linkedin}
               target="_blank"
               rel="noopener noreferrer"
+              title="LinkedIn Profile"
               className="flex items-center gap-1.5 text-[#686868] hover:text-[#222222] transition-colors"
             >
-              <span>LinkedIn</span>
+              <span>LinkedIn Profile</span>
               <ExternalLink className="w-3 h-3 text-[#686868]" aria-hidden="true" />
             </a>
           </div>
