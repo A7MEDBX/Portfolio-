@@ -1,3 +1,21 @@
+export interface ProjectDecision {
+  decision: string;
+  rationale: string;
+  alternativeConsidered: string;
+}
+
+export interface ProjectChallenge {
+  challenge: string;
+  resolution: string;
+  tradeOff: string;
+}
+
+export interface ProjectImplementationSection {
+  title: string;
+  description: string;
+  points: string[];
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -8,9 +26,20 @@ export interface Project {
   technologies: string[];
   summary: string;
   problemStatement: string;
+  objectives: string[];
+  systemOverview: string;
   contribution: string;
-  architectureOverview: string;
   keyResponsibilities: string[];
+  implementationDetails: ProjectImplementationSection[];
+  engineeringDecisions: ProjectDecision[];
+  challengesAndTradeoffs: ProjectChallenge[];
+  testingAndValidation: string[];
+  resultsAndLessons: {
+    completedWork: string[];
+    plannedWork?: string[];
+    lessonsLearned: string[];
+  };
+  architectureOverview: string;
   systemHighlights: string[];
   featured?: boolean;
   repositoryUrl?: string;
