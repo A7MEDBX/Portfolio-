@@ -16,16 +16,28 @@ export interface Project {
   documentationUrl?: string;
 }
 
+export type ExperienceType =
+  | "Internship"
+  | "Training"
+  | "Technical Team"
+  | "Volunteering"
+  | "Employment";
+
 export interface ExperienceItem {
   id: string;
   role: string;
   company: string;
   location: string;
   period: string;
+  type: ExperienceType;
   isCurrent: boolean;
   description: string;
   responsibilities: string[];
   technologies: string[];
+  projectLink?: {
+    label: string;
+    href: string;
+  };
 }
 
 export interface SkillCategory {
