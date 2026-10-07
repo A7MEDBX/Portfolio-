@@ -56,6 +56,7 @@ export interface Project {
     leadershipNarrative: string;
   };
   heroImage?: string;
+  heroImageCaption?: string;
   roleTitle?: string;
 }
 

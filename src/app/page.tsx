@@ -38,16 +38,16 @@ export default function HomePage() {
     {
       num: "02",
       slug: "lostproject",
-      title: "Lostproject",
+      title: "Finder — Asset Recovery & Lost Item Matching Platform",
       description:
-        "A mobile application and backend service engineered for asset recovery. Features implemented include user authentication, profile management, attribute matching logic, direct chat messaging, and secure media upload handling.",
+        "A mobile application and backend service engineered for asset recovery. Features implemented include 14-digit Egyptian National ID KYC verification, AI image matching, peer-to-peer chat, and an incentive Points Wallet with direct mobile cash out rails (Vodafone Cash, InstaPay).",
       technologies: [
-        "Mobile Backend",
-        "User Auth",
-        "Matching Engine",
-        "Chat Services",
-        "Media Storage",
+        "Flutter",
+        "Node.js",
+        "KYC Verification",
+        "AI Matching",
         "PostgreSQL",
+        "Vodafone Cash",
       ],
     },
     {

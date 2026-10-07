@@ -13,6 +13,7 @@ import {
 import {
   LostprojectArchitectureVisual,
   LostprojectMatchingFlowVisual,
+  FinderAppGallery,
 } from "./LostprojectVisuals";
 import Image from "next/image";
 import {
@@ -169,7 +170,10 @@ export function CaseStudyTemplate({
             />
           </div>
           <p className="text-[11px] font-mono text-[#686868] mt-2.5 text-center">
-            Authentic event documentation: Direct head-to-head coding duel during the IEEE Olympics Problem Solving competition.
+            {project.heroImageCaption ||
+              (project.slug === "ieee-olympics-problem-solving"
+                ? "Authentic event documentation: Direct head-to-head coding duel during the IEEE Olympics Problem Solving competition."
+                : `Authentic documentation: Visual capture from ${project.title}.`)}
           </p>
         </div>
       )}
@@ -319,6 +323,7 @@ export function CaseStudyTemplate({
             <div className="space-y-6">
               <LostprojectArchitectureVisual />
               <LostprojectMatchingFlowVisual />
+              <FinderAppGallery />
             </div>
           ) : project.slug === "airzigzag" ? (
             <div className="space-y-6">
