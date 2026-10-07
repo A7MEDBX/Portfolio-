@@ -273,7 +273,7 @@ export const projects: Project[] = [
         description:
           "The mobile client was constructed in Flutter (Dart) to provide cross-platform parity on iOS and Android with native performance.",
         points: [
-          "Developed modular screen architectures for item discovery, lost/found registration forms, user profiles, and chat rooms.",
+          "Developed modular screen architectures for the Community Feed with privacy-protected incident cards, lost/found registration with AI image input, 14-digit Egyptian National ID KYC verification, user profiles, and chat rooms.",
           "Integrated camera and media picker plugins with client-side image compression prior to network dispatch.",
           "Implemented state management routines tracking user sessions, active filters, and real-time chat message streams.",
         ],

@@ -211,6 +211,22 @@ export function FinderAppGallery() {
 
   const screenshots: ScreenshotItem[] = [
     {
+      src: "/images/finder/finder-home-community-feed.jpg",
+      title: "Community Feed & Incident Discovery",
+      subtitle: "Production Home Screen",
+      category: "Discovery & Feed",
+      badge: "Protected Incident Feed",
+      alt: "Finder mobile app Home Screen showing Community Feed of active lost and found incidents across Egypt with protected details and verified checkmarks",
+      caption:
+        "The primary discovery hub of Finder. Presents a real-time feed of active lost and found incidents across Egypt (New Cairo, Downtown, Bitash) featuring privacy-protected incident records, verified member badges, and real-time points balance.",
+      technicalDetails: [
+        "Real-time incident stream categorized into FOUND and LOST with location tags",
+        "Details-protected privacy lock restricting sensitive owner identifiers until authorization",
+        "Blue verified trust checkmark tied to 14-digit Egyptian National ID KYC database records",
+        "Header points tally (3185 pts) and bottom 4-tab navigation (Home, Messages, Quick Add, Profile)",
+      ],
+    },
+    {
       src: "/images/finder/finder-report-item.jpg",
       title: "Item Registration & AI Photo Input",
       subtitle: "Report Item Screen",
@@ -319,16 +335,16 @@ export function FinderAppGallery() {
             Finder App — Production Interface Gallery
           </h2>
           <p className="text-xs text-[#686868] mt-1 font-sans">
-            Verified mobile screens illustrating AI item reporting, 14-digit Egyptian National ID verification, security guardrails, and mobile cash payouts.
+            Verified mobile screens illustrating Community Feed, AI item reporting, 14-digit Egyptian National ID verification, security guardrails, and mobile cash payouts.
           </p>
         </div>
         <span className="text-xs font-mono text-[#686868] bg-[#F4F1EA] px-2.5 py-1 rounded-xs border border-[#E5E2DC] shrink-0">
-          5 Authenticated Screens
+          6 Authenticated Screens
         </span>
       </div>
 
-      {/* 5-Card Responsive Mobile Showcase Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+      {/* 6-Card Responsive Mobile Showcase Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
         {screenshots.map((item, idx) => (
           <div
             key={idx}
