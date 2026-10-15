@@ -1,8 +1,7 @@
 import React from "react";
-import Link from "next/link";
 import { siteConfig } from "@/data/siteConfig";
 import { Container } from "./Container";
-import { ExternalLink, Mail, Phone } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -30,26 +29,8 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Contact & Social Links */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 text-xs font-mono">
-            <Link
-              href="/contact"
-              className="flex items-center gap-1.5 text-[#222222] hover:text-[#2D4A3E] transition-colors"
-            >
-              <Mail className="w-3.5 h-3.5 text-[#686868]" aria-hidden="true" />
-              <span>{siteConfig.email}</span>
-            </Link>
-
-            {siteConfig.phone && (
-              <a
-                href={`tel:${siteConfig.phone}`}
-                className="flex items-center gap-1.5 text-[#686868] hover:text-[#222222] transition-colors"
-              >
-                <Phone className="w-3.5 h-3.5 text-[#686868]" aria-hidden="true" />
-                <span>{siteConfig.phone}</span>
-              </a>
-            )}
-
+          {/* Links: GitHub */}
+          <div className="flex items-center gap-6 text-xs font-mono">
             <a
               href={siteConfig.github}
               target="_blank"
@@ -58,17 +39,6 @@ export function Footer() {
               className="flex items-center gap-1.5 text-[#686868] hover:text-[#222222] transition-colors"
             >
               <span>GitHub Profile</span>
-              <ExternalLink className="w-3 h-3 text-[#686868]" aria-hidden="true" />
-            </a>
-
-            <a
-              href={siteConfig.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="LinkedIn Profile"
-              className="flex items-center gap-1.5 text-[#686868] hover:text-[#222222] transition-colors"
-            >
-              <span>LinkedIn Profile</span>
               <ExternalLink className="w-3 h-3 text-[#686868]" aria-hidden="true" />
             </a>
           </div>

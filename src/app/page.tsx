@@ -199,17 +199,6 @@ export default function HomePage() {
                 <span>GitHub Profile</span>
                 <ExternalLink className="w-3 h-3 text-[#686868]" />
               </a>
-              <span className="text-[#E5E2DC]">•</span>
-              <a
-                href={siteConfig.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs font-mono text-[#686868] hover:text-[#222222] transition-colors flex items-center gap-1"
-                title="LinkedIn Profile"
-              >
-                <span>LinkedIn Profile</span>
-                <ExternalLink className="w-3 h-3 text-[#686868]" />
-              </a>
             </div>
           </div>
         </div>
@@ -410,50 +399,6 @@ export default function HomePage() {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* 6. CLOSING SECTION */}
-      <section className="py-6">
-        <div className="max-w-2xl">
-          <p className="text-xs uppercase tracking-widest font-mono text-[#2D4A3E] font-medium mb-2">
-            Inquiries & Collaboration
-          </p>
-          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#222222] tracking-tight mb-4">
-            Let's talk about engineering.
-          </h2>
-          <p className="text-sm sm:text-base text-[#686868] leading-relaxed mb-8 font-sans">
-            Whether you are looking to discuss distributed systems, API architecture, database optimization, or prospective backend opportunities, I welcome thoughtful technical discussions.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <Button href="/contact" variant="primary">
-              <span>Contact Ahmed</span>
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-
-            <a
-              href={siteConfig.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="GitHub Profile"
-              className="inline-flex items-center gap-1.5 bg-[#FAF9F6] text-[#222222] border border-[#E5E2DC] hover:border-[#2D4A3E]/40 hover:bg-[#EEF3F0] px-4 py-2 text-sm font-medium rounded-xs transition-colors duration-150"
-            >
-              <span>GitHub Profile</span>
-              <ExternalLink className="w-3.5 h-3.5 text-[#686868]" />
-            </a>
-
-            <a
-              href={siteConfig.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="LinkedIn Profile"
-              className="inline-flex items-center gap-1.5 bg-[#FAF9F6] text-[#222222] border border-[#E5E2DC] hover:border-[#2D4A3E]/40 hover:bg-[#EEF3F0] px-4 py-2 text-sm font-medium rounded-xs transition-colors duration-150"
-            >
-              <span>LinkedIn Profile</span>
-              <ExternalLink className="w-3.5 h-3.5 text-[#686868]" />
-            </a>
-          </div>
         </div>
       </section>
     </Container>

@@ -15,7 +15,6 @@ import {
   Users,
   CheckCircle2,
   BookOpen,
-  Mail,
   Layers,
   Terminal,
 } from "lucide-react";
@@ -430,33 +429,19 @@ export default function AboutPage() {
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button href="/contact" variant="primary">
-                <Mail className="w-4 h-4" />
-                <span>Contact Ahmed</span>
-              </Button>
-              <Button href="/projects" variant="secondary">
+              <Button href="/projects" variant="primary">
                 <span>View Projects</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Button>
               <Button
-                href={siteConfig.linkedin}
+                href={siteConfig.github}
                 variant="secondary"
                 external
               >
-                <span>LinkedIn Profile</span>
+                <span>GitHub Profile</span>
                 <ExternalLink className="w-3.5 h-3.5 text-[#686868]" />
               </Button>
             </div>
-
-            <p className="text-xs font-mono text-[#686868] mt-6">
-              Direct email:{" "}
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="text-[#2D4A3E] hover:underline underline-offset-4 font-medium"
-              >
-                {siteConfig.email}
-              </a>
-            </p>
           </div>
         </section>
       </div>
