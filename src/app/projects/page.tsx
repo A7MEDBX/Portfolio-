@@ -6,14 +6,7 @@ import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { projects } from "@/data/projects";
 import { ProjectVisualPreview } from "@/components/home/ProjectVisualPreview";
-import {
-  ArrowRight,
-  ExternalLink,
-  Layers,
-  Cpu,
-  CheckCircle2,
-  GitBranch,
-} from "lucide-react";
+import { ArrowRight, ExternalLink, CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -48,7 +41,7 @@ export default function ProjectsPage() {
               </h2>
             </div>
             <span className="text-xs font-mono text-[#686868]">
-              Detailed Architectural Breakdowns
+              Scannable Overviews &amp; Technical Breakdowns
             </span>
           </div>
 
@@ -69,7 +62,7 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* Title */}
-                <h3 className="font-serif text-3xl sm:text-4xl font-normal text-[#222222] tracking-tight mb-4">
+                <h3 className="font-serif text-3xl sm:text-4xl font-normal text-[#222222] tracking-tight mb-3">
                   <Link
                     href={`/projects/${project.slug}`}
                     className="hover:text-[#2D4A3E] hover:underline underline-offset-4 transition-colors"
@@ -78,54 +71,80 @@ export default function ProjectsPage() {
                   </Link>
                 </h3>
 
-                {/* Brief Description */}
+                {/* One-Sentence Description */}
                 <p className="text-base text-[#686868] font-sans leading-relaxed mb-6 max-w-3xl">
-                  {project.summary}
+                  {project.oneSentenceOverview || project.subtitle || project.summary}
                 </p>
+
+                {/* Standout Feature / Capability Labels */}
+                {project.coreFeatures && project.coreFeatures.length > 0 && (
+                  <div className="mb-6">
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#686868] font-medium block mb-2">
+                      Key Capabilities &amp; Workflows
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {project.coreFeatures.slice(0, 3).map((feat, fIdx) => (
+                        <div
+                          key={fIdx}
+                          className="flex items-start gap-2.5 bg-[#FAF9F6] border border-[#E5E2DC] p-3 rounded-xs"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#2D4A3E] shrink-0 mt-0.5" />
+                          <div>
+                            <p className="text-xs font-mono uppercase tracking-wide font-medium text-[#222222]">
+                              {feat.title}
+                            </p>
+                            <p className="text-[12px] text-[#686868] font-sans leading-snug mt-1">
+                              {feat.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Visual Architecture Preview */}
                 <ProjectVisualPreview slug={project.slug} />
 
-                {/* Structured Problem & Contribution Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6 bg-[#FAF9F6] border border-[#E5E2DC] p-6 rounded-xs">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2 text-xs font-mono uppercase tracking-wider text-[#686868] font-medium">
-                      <Cpu className="w-3.5 h-3.5 text-[#2D4A3E]" />
-                      <span>Problem Addressed</span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-[#686868] font-sans leading-relaxed">
-                      {project.problemStatement}
-                    </p>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center gap-2 mb-2 text-xs font-mono uppercase tracking-wider text-[#2D4A3E] font-medium">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#2D4A3E]" />
-                      <span>My Contribution</span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-[#222222] font-sans leading-relaxed">
-                      {project.contribution}
-                    </p>
-                  </div>
-                </div>
-
                 {/* Tech Stack and Navigation Links */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.map((tech) => (
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-[#E5E2DC]/70">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {project.technologies.slice(0, 5).map((tech) => (
                       <Badge key={tech} variant="default">
                         {tech}
                       </Badge>
                     ))}
+                    {project.technologies.length > 5 && (
+                      <span className="text-[11px] font-mono text-[#686868] ml-1">
+                        +{project.technologies.length - 5}
+                      </span>
+                    )}
                   </div>
 
-                  <div className="flex items-center gap-4 shrink-0">
+                  <div className="flex items-center gap-3 shrink-0 flex-wrap">
+                    {/* Primary direct demo/media action if distinct */}
+                    {project.primaryAction &&
+                      project.primaryAction.href !== `/projects/${project.slug}` && (
+                        <Button
+                          href={project.primaryAction.href}
+                          external={project.primaryAction.external}
+                          variant="secondary"
+                        >
+                          <span>{project.primaryAction.label}</span>
+                          {project.primaryAction.external ? (
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          ) : (
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          )}
+                        </Button>
+                      )}
+
                     {project.repositoryUrl && (
                       <a
                         href={project.repositoryUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#686868] hover:text-[#222222] transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#686868] hover:text-[#222222] transition-colors px-2 py-1"
                         title="GitHub Repository"
                       >
                         <span>GitHub</span>
@@ -144,7 +163,7 @@ export default function ProjectsPage() {
           </div>
         </section>
 
-        {/* 3. COMPACT PRESENTATIONS (Sport Club, Egyptian Law, Hospital Management) */}
+        {/* 3. COMPACT PRESENTATIONS (IEEE Aswan, IEEE Olympics, Sport Club, Egyptian Law, Hospital) */}
         <section className="border-t border-[#E5E2DC] pt-12">
           <div className="flex items-baseline justify-between border-b border-[#E5E2DC] pb-4 mb-8">
             <div>
@@ -152,7 +171,7 @@ export default function ProjectsPage() {
                 Additional Projects
               </p>
               <h2 className="font-serif text-2xl font-normal text-[#222222]">
-                Specialized Systems & Applications
+                Specialized Systems &amp; Applications
               </h2>
             </div>
             <span className="text-xs font-mono text-[#686868]">
@@ -184,50 +203,75 @@ export default function ProjectsPage() {
                   </Link>
                 </h3>
 
+                {/* One-Sentence Description */}
                 <p className="text-sm text-[#686868] font-sans leading-relaxed mb-4">
-                  {project.summary}
+                  {project.oneSentenceOverview || project.subtitle || project.summary}
                 </p>
+
+                {/* Standout Feature / Capability Labels */}
+                {project.coreFeatures && project.coreFeatures.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 my-3">
+                    {project.coreFeatures.slice(0, 3).map((feat, fIdx) => (
+                      <div
+                        key={fIdx}
+                        className="flex items-start gap-2 bg-[#F5F3EE]/80 border border-[#E5E2DC] p-2.5 rounded-xs"
+                      >
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#2D4A3E] shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-[11px] font-mono uppercase tracking-wide font-medium text-[#222222]">
+                            {feat.title}
+                          </p>
+                          <p className="text-[11px] text-[#686868] font-sans leading-snug mt-0.5">
+                            {feat.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 {/* Compact Technical Visual Preview */}
                 <ProjectVisualPreview slug={project.slug} />
 
-                {/* Problem & Contribution */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 pt-3 border-t border-[#E5E2DC] text-xs font-sans">
-                  <div>
-                    <span className="font-mono text-[#686868] uppercase tracking-wider block mb-1 font-medium">
-                      Problem Addressed:
-                    </span>
-                    <p className="text-[#686868] leading-relaxed">
-                      {project.problemStatement}
-                    </p>
-                  </div>
-                  <div>
-                    <span className="font-mono text-[#2D4A3E] uppercase tracking-wider block mb-1 font-medium">
-                      My Contribution:
-                    </span>
-                    <p className="text-[#222222] leading-relaxed">
-                      {project.contribution}
-                    </p>
-                  </div>
-                </div>
-
                 {/* Stack & Links */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-[#E5E2DC]">
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.map((tech) => (
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 mt-4 border-t border-[#E5E2DC]">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {project.technologies.slice(0, 4).map((tech) => (
                       <Badge key={tech} variant="muted">
                         {tech}
                       </Badge>
                     ))}
+                    {project.technologies.length > 4 && (
+                      <span className="text-[11px] font-mono text-[#686868] ml-1">
+                        +{project.technologies.length - 4}
+                      </span>
+                    )}
                   </div>
 
-                  <div className="flex items-center gap-3 shrink-0">
+                  <div className="flex items-center gap-3 shrink-0 flex-wrap">
+                    {/* Primary direct demo/media action if distinct */}
+                    {project.primaryAction &&
+                      project.primaryAction.href !== `/projects/${project.slug}` && (
+                        <Button
+                          href={project.primaryAction.href}
+                          external={project.primaryAction.external}
+                          variant="secondary"
+                        >
+                          <span>{project.primaryAction.label}</span>
+                          {project.primaryAction.external ? (
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          ) : (
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          )}
+                        </Button>
+                      )}
+
                     {project.repositoryUrl && (
                       <a
                         href={project.repositoryUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#686868] hover:text-[#222222] transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-[#686868] hover:text-[#222222] transition-colors px-2 py-1"
                         title="GitHub Repository"
                       >
                         <span>GitHub</span>

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Project } from "@/types";
 import { PageHeader } from "@/components/PageHeader";
 import { Badge } from "@/components/Badge";
@@ -15,7 +16,6 @@ import {
   LostprojectMatchingFlowVisual,
   FinderAppGallery,
 } from "./LostprojectVisuals";
-import Image from "next/image";
 import {
   AirzigzagArchitectureVisual,
   AirzigzagUserJourneyVisual,
@@ -43,6 +43,7 @@ import {
   ArrowLeft,
   ArrowRight,
   FileCode2,
+  ChevronDown,
 } from "lucide-react";
 
 interface CaseStudyTemplateProps {
@@ -67,18 +68,30 @@ export function CaseStudyTemplate({
 
   return (
     <div>
-      {/* 1. PROJECT TITLE & SHORT SUMMARY */}
+      {/* 1. PROJECT HERO */}
       <PageHeader
-        eyebrow={`ENGINEERING CASE STUDY // ${project.category.toUpperCase()}`}
+        eyebrow={`CASE STUDY // ${project.category.toUpperCase()}`}
         title={project.title}
-        subtitle={project.subtitle}
+        subtitle={project.oneSentenceOverview || project.subtitle}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Projects", href: "/projects" },
           { label: project.title },
         ]}
       >
-        {/* 2. PROJECT METADATA */}
+        {/* Value Statement Box */}
+        {project.valueStatement && (
+          <div className="bg-[#FAF9F6] border border-[#E5E2DC] p-4 sm:p-5 rounded-xs my-4">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#2D4A3E] font-medium block mb-1">
+              Core Problem &amp; Value Proposition
+            </span>
+            <p className="text-sm sm:text-base text-[#222222] font-sans leading-relaxed">
+              {project.valueStatement}
+            </p>
+          </div>
+        )}
+
+        {/* Project Metadata Strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-[#E5E2DC] text-xs font-mono">
           <div>
             <span className="text-[#686868] block mb-1">Status</span>
@@ -89,11 +102,13 @@ export function CaseStudyTemplate({
             <span className="text-[#222222] font-medium">{project.timeline}</span>
           </div>
           <div>
-            <span className="text-[#686868] block mb-1">Domain</span>
-            <span className="text-[#222222] font-medium">{project.category}</span>
+            <span className="text-[#686868] block mb-1">Role</span>
+            <span className="text-[#222222] font-medium">
+              {project.roleTitle || "Backend Software Engineer"}
+            </span>
           </div>
           <div>
-            <span className="text-[#686868] block mb-1">Links & Access</span>
+            <span className="text-[#686868] block mb-1">Links &amp; Code</span>
             <div className="flex flex-wrap items-center gap-2">
               {project.repositoryUrl ? (
                 <a
@@ -125,34 +140,46 @@ export function CaseStudyTemplate({
                   </a>
                 </>
               )}
-
-              {project.announcementUrl && (
-                <>
-                  <span className="text-[#E5E2DC]">•</span>
-                  <a
-                    href={project.announcementUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Public Announcement on LinkedIn"
-                    className="text-[#2D4A3E] hover:underline underline-offset-4 flex items-center gap-1 font-medium"
-                  >
-                    <span>LinkedIn Announcement</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </>
-              )}
             </div>
           </div>
         </div>
 
-        {project.roleTitle && (
-          <div className="pt-3 border-t border-[#E5E2DC] mt-3 flex items-center gap-2 text-xs font-mono">
-            <span className="text-[#686868]">Leadership Role:</span>
-            <span className="text-[#2D4A3E] font-medium">{project.roleTitle}</span>
+        {/* Top Tech Badges & Primary Action Bar */}
+        <div className="pt-4 mt-4 border-t border-[#E5E2DC] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-xs font-mono text-[#686868] mr-1">Core Tech:</span>
+            {project.technologies.slice(0, 5).map((tech) => (
+              <Badge key={tech} variant="default" className="text-xs py-0.5 px-2">
+                {tech}
+              </Badge>
+            ))}
           </div>
-        )}
+
+          <div className="flex flex-wrap items-center gap-2.5">
+            {project.primaryAction && (
+              <Button
+                href={project.primaryAction.href}
+                variant="primary"
+                external={project.primaryAction.external}
+              >
+                <span>{project.primaryAction.label}</span>
+                {project.primaryAction.external ? (
+                  <ExternalLink className="w-3.5 h-3.5" />
+                ) : (
+                  <ArrowRight className="w-3.5 h-3.5" />
+                )}
+              </Button>
+            )}
+
+            <Button href="#technical-details" variant="secondary">
+              <span>Technical Details</span>
+              <ChevronDown className="w-3.5 h-3.5 text-[#686868]" />
+            </Button>
+          </div>
+        </div>
       </PageHeader>
 
+      {/* Hero Image if authentic photograph available */}
       {project.heroImage && (
         <div className="border border-[#E5E2DC] bg-[#FAF9F6] p-3 sm:p-4 rounded-xs my-8 overflow-hidden">
           <div className="relative aspect-16/9 sm:aspect-21/9 w-full bg-[#1A1A1A] rounded-xs overflow-hidden">
@@ -175,71 +202,105 @@ export function CaseStudyTemplate({
       )}
 
       <article className="space-y-14">
-        {/* Executive Summary paragraph */}
-        <section className="bg-[#FAF9F6] border border-[#E5E2DC] p-6 sm:p-7 rounded-xs">
-          <span className="text-xs font-mono uppercase tracking-wider text-[#2D4A3E] font-medium block mb-2">
-            Executive Summary
-          </span>
-          <p className="text-base text-[#222222] font-sans leading-relaxed">
-            {project.summary}
-          </p>
-        </section>
-
-        {/* 3. PROBLEM AND OBJECTIVES */}
-        <section className="border-t border-[#E5E2DC] pt-10">
-          <div className="flex items-center gap-2.5 mb-4">
-            <Cpu className="w-5 h-5 text-[#2D4A3E]" />
-            <h2 className="font-serif text-2xl font-normal text-[#222222]">
-              Problem & Engineering Objectives
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xs font-mono uppercase tracking-wider text-[#686868] mb-2 font-medium">
-                The Problem
-              </h3>
-              <p className="text-sm sm:text-base text-[#686868] font-sans leading-relaxed">
-                {project.problemStatement}
+        {/* 2. CORE FEATURES (3-5 COMPELLING FEATURES) */}
+        {project.coreFeatures && project.coreFeatures.length > 0 && (
+          <section className="border-t border-[#E5E2DC] pt-10">
+            <div className="max-w-2xl mb-6">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#2D4A3E] font-medium block mb-1">
+                Core Capabilities &amp; Features
+              </span>
+              <h2 className="font-serif text-2xl font-normal text-[#222222]">
+                What This System Enables
+              </h2>
+              <p className="text-xs text-[#686868] font-sans mt-1">
+                Key user workflows, operational capabilities, and engineering solutions delivered in this project.
               </p>
             </div>
 
-            <div className="border border-[#E5E2DC] bg-[#FAF9F6] p-5 sm:p-6 rounded-xs">
-              <h3 className="text-xs font-mono uppercase tracking-wider text-[#2D4A3E] mb-3 font-medium flex items-center gap-1.5">
-                <Target className="w-3.5 h-3.5" />
-                <span>Primary Engineering Objectives</span>
-              </h3>
-              <ul className="space-y-2.5 text-sm text-[#222222] font-sans">
-                {project.objectives.map((obj, i) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] mt-2 shrink-0" />
-                    <span className="leading-relaxed">{obj}</span>
-                  </li>
-                ))}
-              </ul>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {project.coreFeatures.map((feat, idx) => (
+                <div
+                  key={idx}
+                  className="border border-[#E5E2DC] bg-[#FAF9F6] p-5 sm:p-6 rounded-xs flex flex-col justify-between hover:border-[#2D4A3E]/40 transition-colors"
+                >
+                  <div>
+                    <div className="flex items-center justify-between text-xs font-mono mb-2 pb-2 border-b border-[#E5E2DC]">
+                      <span className="text-[#2D4A3E] font-medium">FEATURE 0{idx + 1}</span>
+                      {feat.workflow && (
+                        <span className="text-[#686868] bg-white px-2 py-0.5 rounded-xs border border-[#E5E2DC] text-[10px]">
+                          {feat.workflow}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-serif text-lg font-medium text-[#222222] mb-2">
+                      {feat.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[#686868] font-sans leading-relaxed">
+                      {feat.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
+          </section>
+        )}
+
+        {/* 3. MEDIA AND DEMONSTRATIONS */}
+        <section id="project-media" className="border-t border-[#E5E2DC] pt-10 scroll-mt-20">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 mb-6">
+            <div>
+              <span className="text-xs font-mono uppercase tracking-wider text-[#2D4A3E] font-medium block mb-1">
+                Visual Documentation &amp; Demonstrations
+              </span>
+              <h2 className="font-serif text-2xl font-normal text-[#222222]">
+                System Visuals &amp; Live Artifacts
+              </h2>
+            </div>
+            <span className="text-xs font-mono text-[#686868]">
+              Authentic Production Evidence
+            </span>
           </div>
+
+          {/* Genuine Labeled Technical Visual Preview */}
+          {project.slug === "samcs" ? (
+            <div className="space-y-6">
+              <SAMCSArchitectureVisual />
+              <SAMCSTelemetryFrameVisual />
+            </div>
+          ) : project.slug === "lostproject" ? (
+            <div className="space-y-6">
+              <FinderAppGallery />
+              <LostprojectArchitectureVisual />
+              <LostprojectMatchingFlowVisual />
+            </div>
+          ) : project.slug === "airzigzag" ? (
+            <div className="space-y-6">
+              <AirzigzagArchitectureVisual />
+              <AirzigzagUserJourneyVisual />
+            </div>
+          ) : project.slug === "ieee-aswan-student-branch" ? (
+            <div className="space-y-6">
+              <IEEEAswanPlaceholderVisual />
+              <IEEEAswanArchitectureVisual />
+            </div>
+          ) : project.slug === "ieee-olympics-problem-solving" ? (
+            <div className="space-y-6">
+              <OlympicsBracketVisual />
+              <OlympicsEventGallery />
+            </div>
+          ) : (
+            <div>
+              <ProjectVisualPreview slug={project.slug} />
+            </div>
+          )}
         </section>
 
-        {/* 4. SYSTEM OVERVIEW */}
-        <section className="border-t border-[#E5E2DC] pt-10">
-          <div className="flex items-center gap-2.5 mb-4">
-            <Layers className="w-5 h-5 text-[#2D4A3E]" />
-            <h2 className="font-serif text-2xl font-normal text-[#222222]">
-              System Overview
-            </h2>
-          </div>
-          <p className="text-sm sm:text-base text-[#686868] font-sans leading-relaxed">
-            {project.systemOverview}
-          </p>
-        </section>
-
-        {/* 5. MY ROLE AND CONTRIBUTIONS */}
+        {/* 4. MY CONTRIBUTION & ENGINEERING ROLE */}
         <section className="border-t border-[#E5E2DC] pt-10">
           <div className="flex items-center gap-2.5 mb-4">
             <Code2 className="w-5 h-5 text-[#2D4A3E]" />
             <h2 className="font-serif text-2xl font-normal text-[#222222]">
-              My Role & Contributions
+              My Contribution &amp; Engineering Role
             </h2>
           </div>
 
@@ -254,7 +315,7 @@ export function CaseStudyTemplate({
               Concrete Engineering Deliverables
             </h3>
             <ul className="space-y-3">
-              {project.keyResponsibilities.map((resp, i) => (
+              {project.keyResponsibilities.slice(0, 4).map((resp, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-[#222222] font-sans">
                   <CheckCircle2 className="w-4 h-4 text-[#2D4A3E] mt-0.5 shrink-0" />
                   <span className="leading-relaxed">{resp}</span>
@@ -262,197 +323,195 @@ export function CaseStudyTemplate({
               ))}
             </ul>
           </div>
-        </section>
 
-        {/* DEDICATED SECTION: LEADING THE WEB TEAM */}
-        {project.teamLeadership && (
-          <section className="border-t border-[#E5E2DC] pt-10">
-            <div className="flex items-center gap-2.5 mb-4">
-              <Users className="w-5 h-5 text-[#2D4A3E]" />
-              <h2 className="font-serif text-2xl font-normal text-[#222222]">
-                Leading the Web Team
-              </h2>
-            </div>
-            <div className="bg-[#FAF9F6] border border-[#E5E2DC] p-6 rounded-xs mb-6">
+          {/* DEDICATED LEADERSHIP SUMMARY (If applicable) */}
+          {project.teamLeadership && (
+            <div className="mt-6 border border-[#E5E2DC] bg-white p-5 rounded-xs">
               <span className="text-xs font-mono uppercase tracking-wider text-[#2D4A3E] block mb-2 font-medium">
                 Leadership Context // {project.teamLeadership.roleTitle}
               </span>
-              <p className="text-sm sm:text-base text-[#222222] font-sans leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#686868] font-sans leading-relaxed mb-3">
                 {project.teamLeadership.leadershipNarrative}
               </p>
-            </div>
-            <div>
-              <h3 className="text-xs font-mono uppercase tracking-wider text-[#686868] mb-3 font-medium">
-                Coordination, Code Review &amp; Task Distribution
-              </h3>
-              <ul className="space-y-3">
-                {project.teamLeadership.responsibilities.map((resp, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-[#222222] font-sans">
-                    <CheckCircle2 className="w-4 h-4 text-[#2D4A3E] mt-0.5 shrink-0" />
+              <ul className="space-y-2 text-xs text-[#222222] font-sans">
+                {project.teamLeadership.responsibilities.slice(0, 3).map((resp, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] mt-1.5 shrink-0" />
                     <span className="leading-relaxed">{resp}</span>
                   </li>
                 ))}
               </ul>
             </div>
-          </section>
-        )}
-
-        {/* 6. ARCHITECTURE DIAGRAM */}
-        <section className="border-t border-[#E5E2DC] pt-10">
-          <div className="flex items-center gap-2.5 mb-2">
-            <GitBranch className="w-5 h-5 text-[#2D4A3E]" />
-            <h2 className="font-serif text-2xl font-normal text-[#222222]">
-              Architecture Diagram & Data Flow
-            </h2>
-          </div>
-          <p className="text-sm text-[#686868] font-sans leading-relaxed mb-4">
-            {project.architectureOverview}
-          </p>
-
-          {/* Genuine Labeled Technical Visual Preview */}
-          {project.slug === "samcs" ? (
-            <div className="space-y-6">
-              <SAMCSArchitectureVisual />
-              <SAMCSTelemetryFrameVisual />
-            </div>
-          ) : project.slug === "lostproject" ? (
-            <div className="space-y-6">
-              <LostprojectArchitectureVisual />
-              <LostprojectMatchingFlowVisual />
-              <FinderAppGallery />
-            </div>
-          ) : project.slug === "airzigzag" ? (
-            <div className="space-y-6">
-              <AirzigzagArchitectureVisual />
-              <AirzigzagUserJourneyVisual />
-            </div>
-          ) : project.slug === "ieee-aswan-student-branch" ? (
-            <div className="space-y-6">
-              <IEEEAswanArchitectureVisual />
-              <IEEEAswanPlaceholderVisual />
-            </div>
-          ) : project.slug === "ieee-olympics-problem-solving" ? (
-            <div className="space-y-6">
-              <OlympicsBracketVisual />
-              <OlympicsEventGallery />
-            </div>
-          ) : (
-            <div>
-              <ProjectVisualPreview slug={project.slug} />
-              <ArchitectureDiagram
-                title={`${project.title} — System Topology`}
-                type={diagramType}
-              />
-            </div>
           )}
         </section>
 
-        {/* 7. TECHNOLOGY STACK */}
+        {/* 5. TECHNICAL DETAILS (COLLAPSIBLE DISCLOSURE) */}
         <section className="border-t border-[#E5E2DC] pt-10">
-          <h2 className="font-serif text-2xl font-normal text-[#222222] mb-4">
-            Technology Stack
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {project.technologies.map((tech) => (
-              <Badge key={tech} variant="default" className="text-sm py-1 px-3">
-                {tech}
-              </Badge>
-            ))}
-          </div>
-        </section>
+          <details
+            id="technical-details"
+            className="group border border-[#E5E2DC] bg-[#FAF9F6] rounded-xs overflow-hidden scroll-mt-24 transition-all"
+          >
+            <summary className="p-6 sm:p-7 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 list-none hover:bg-[#EEF3F0] transition-colors select-none">
+              <div>
+                <span className="text-xs font-mono uppercase tracking-wider text-[#2D4A3E] font-medium block mb-1">
+                  Deep Technical Exploration
+                </span>
+                <h2 className="font-serif text-2xl font-normal text-[#222222]">
+                  Technical Details &amp; Architecture Breakdown
+                </h2>
+                <p className="text-xs text-[#686868] font-sans mt-1">
+                  Expand to inspect architecture diagrams, database schemas, API boundaries, and security considerations.
+                </p>
+              </div>
 
-        {/* 8. IMPLEMENTATION DETAILS */}
-        <section className="border-t border-[#E5E2DC] pt-10">
-          <div className="flex items-center gap-2.5 mb-6">
-            <FileCode2 className="w-5 h-5 text-[#2D4A3E]" />
-            <h2 className="font-serif text-2xl font-normal text-[#222222]">
-              Implementation Details
-            </h2>
-          </div>
+              <div className="flex items-center gap-2 text-xs font-mono text-[#2D4A3E] bg-white border border-[#E5E2DC] px-3 py-1.5 rounded-xs shrink-0 shadow-xs group-hover:border-[#2D4A3E]/40">
+                <span className="group-open:hidden">+ View Architecture &amp; Code Specs</span>
+                <span className="hidden group-open:inline">- Collapse Technical Details</span>
+                <ChevronDown className="w-4 h-4 transition-transform duration-200 group-open:rotate-180" />
+              </div>
+            </summary>
 
-          <div className="space-y-6">
-            {project.implementationDetails.map((impl, idx) => (
-              <div
-                key={idx}
-                className="border border-[#E5E2DC] bg-[#FAF9F6] p-6 rounded-xs"
-              >
-                <div className="flex items-baseline justify-between mb-2">
-                  <h3 className="font-serif text-lg font-normal text-[#222222]">
-                    {impl.title}
+            <div className="p-6 sm:p-8 border-t border-[#E5E2DC] bg-white space-y-12">
+              {/* Problem & Objectives */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Cpu className="w-4 h-4 text-[#2D4A3E]" />
+                  <h3 className="font-serif text-xl font-normal text-[#222222]">
+                    Problem &amp; Engineering Objectives
                   </h3>
-                  <span className="text-xs font-mono text-[#2D4A3E]">
-                    SECTION 0{idx + 1}
+                </div>
+                <p className="text-sm text-[#686868] font-sans leading-relaxed mb-4">
+                  {project.problemStatement}
+                </p>
+                <div className="border border-[#E5E2DC] bg-[#FAF9F6] p-4 rounded-xs">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#2D4A3E] font-medium block mb-2.5">
+                    Primary Objectives:
                   </span>
+                  <ul className="space-y-2 text-xs sm:text-sm text-[#222222] font-sans">
+                    {project.objectives.map((obj, i) => (
+                      <li key={i} className="flex items-start gap-2.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] mt-2 shrink-0" />
+                        <span className="leading-relaxed">{obj}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <p className="text-xs sm:text-sm text-[#686868] font-sans leading-relaxed mb-4">
-                  {impl.description}
-                </p>
-                <ul className="space-y-2 text-xs sm:text-sm text-[#222222] font-sans">
-                  {impl.points.map((pt, pIdx) => (
-                    <li key={pIdx} className="flex items-start gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] mt-2 shrink-0" />
-                      <span className="leading-relaxed">{pt}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
-            ))}
-          </div>
+
+              {/* System Overview */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Layers className="w-4 h-4 text-[#2D4A3E]" />
+                  <h3 className="font-serif text-xl font-normal text-[#222222]">
+                    System Architecture &amp; Data Flow
+                  </h3>
+                </div>
+                <p className="text-sm text-[#686868] font-sans leading-relaxed mb-4">
+                  {project.systemOverview}
+                </p>
+                <ArchitectureDiagram
+                  title={`${project.title} — System Topology`}
+                  type={diagramType}
+                />
+              </div>
+
+              {/* Deep Implementation Details */}
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <FileCode2 className="w-4 h-4 text-[#2D4A3E]" />
+                  <h3 className="font-serif text-xl font-normal text-[#222222]">
+                    Component Implementation Breakdown
+                  </h3>
+                </div>
+                <div className="space-y-4">
+                  {project.implementationDetails.map((impl, idx) => (
+                    <div
+                      key={idx}
+                      className="border border-[#E5E2DC] bg-[#FAF9F6] p-5 rounded-xs"
+                    >
+                      <div className="flex items-baseline justify-between mb-2">
+                        <h4 className="font-serif text-base font-normal text-[#222222]">
+                          {impl.title}
+                        </h4>
+                        <span className="text-xs font-mono text-[#2D4A3E]">
+                          SPEC 0{idx + 1}
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#686868] font-sans leading-relaxed mb-3">
+                        {impl.description}
+                      </p>
+                      <ul className="space-y-1.5 text-xs text-[#222222] font-sans">
+                        {impl.points.map((pt, pIdx) => (
+                          <li key={pIdx} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] mt-1.5 shrink-0" />
+                            <span className="leading-relaxed">{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Security Considerations */}
+              {project.securityConsiderations && (
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Lock className="w-4 h-4 text-[#2D4A3E]" />
+                    <h3 className="font-serif text-xl font-normal text-[#222222]">
+                      Security Considerations &amp; Defenses
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="border border-[#E5E2DC] bg-[#FAF9F6] p-4 rounded-xs">
+                      <span className="text-xs font-mono uppercase tracking-wider text-[#2D4A3E] block mb-2 font-medium">
+                        Implemented Controls
+                      </span>
+                      <ul className="space-y-2 text-xs text-[#222222] font-sans">
+                        {project.securityConsiderations.implemented.map((m, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] mt-1.5 shrink-0" />
+                            <span className="leading-relaxed">{m}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="border border-[#E5E2DC] bg-[#F7F5F0] p-4 rounded-xs">
+                      <span className="text-xs font-mono uppercase tracking-wider text-[#686868] block mb-2 font-medium">
+                        Operational Boundaries &amp; Recommendations
+                      </span>
+                      <ul className="space-y-2 text-xs text-[#686868] font-sans">
+                        {project.securityConsiderations.recommendations.map((r, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#686868] mt-1.5 shrink-0" />
+                            <span className="leading-relaxed">{r}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Complete Technology Stack */}
+              <div>
+                <span className="text-xs font-mono uppercase tracking-wider text-[#686868] block mb-2 font-medium">
+                  Full Technology Stack
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies.map((tech) => (
+                    <Badge key={tech} variant="default" className="text-xs py-1 px-2.5">
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </details>
         </section>
 
-        {/* DEDICATED SECTION: SECURITY CONSIDERATIONS */}
-        {project.securityConsiderations && (
-          <section className="border-t border-[#E5E2DC] pt-10">
-            <div className="flex items-center gap-2.5 mb-6">
-              <Lock className="w-5 h-5 text-[#2D4A3E]" />
-              <h2 className="font-serif text-2xl font-normal text-[#222222]">
-                Security Considerations
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="border border-[#E5E2DC] bg-[#FAF9F6] p-6 rounded-xs">
-                <div className="flex items-center gap-2 mb-4 pb-2 border-b border-[#E5E2DC]">
-                  <ShieldCheck className="w-4 h-4 text-[#2D4A3E]" />
-                  <h3 className="font-serif text-base text-[#222222]">
-                    Implemented Measures
-                  </h3>
-                </div>
-                <ul className="space-y-3 text-xs sm:text-sm text-[#222222] font-sans">
-                  {project.securityConsiderations.implemented.map((m, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#2D4A3E] mt-2 shrink-0" />
-                      <span className="leading-relaxed">{m}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="border border-[#E5E2DC] bg-[#F7F5F0] p-6 rounded-xs">
-                <div className="flex items-center gap-2 mb-4 pb-2 border-b border-[#E5E2DC]">
-                  <ShieldAlert className="w-4 h-4 text-[#686868]" />
-                  <h3 className="font-serif text-base text-[#222222]">
-                    Recommendations &amp; Future Improvements
-                  </h3>
-                </div>
-                <ul className="space-y-3 text-xs sm:text-sm text-[#686868] font-sans">
-                  {project.securityConsiderations.recommendations.map((r, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#686868] mt-2 shrink-0" />
-                      <span className="leading-relaxed">{r}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-[11px] font-mono text-[#686868] mt-5 pt-3 border-t border-[#E5E2DC] italic">
-                  Note: The system is documented strictly by its implemented controls and does not claim independent third-party penetration certification.
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
-
-
-        {/* 13. RELATED PROJECTS */}
+        {/* 6. RELATED PROJECTS */}
         {relatedProjects.length > 0 && (
           <section className="border-t border-[#E5E2DC] pt-10">
             <div className="max-w-2xl mb-6">
@@ -479,7 +538,7 @@ export function CaseStudyTemplate({
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </h3>
                   <p className="text-xs text-[#686868] font-sans leading-relaxed mb-3">
-                    {rel.summary}
+                    {rel.oneSentenceOverview || rel.summary}
                   </p>
                   <div className="flex flex-wrap gap-1">
                     {rel.technologies.slice(0, 3).map((t) => (
@@ -494,7 +553,7 @@ export function CaseStudyTemplate({
           </section>
         )}
 
-        {/* 14. PREVIOUS / NEXT PROJECT NAVIGATION */}
+        {/* 7. PREVIOUS / NEXT PROJECT NAVIGATION */}
         <nav
           aria-label="Case Study Navigation"
           className="border-t border-[#E5E2DC] pt-10 mt-16 flex flex-col sm:flex-row items-center justify-between gap-4"
@@ -502,40 +561,26 @@ export function CaseStudyTemplate({
           {prevProject ? (
             <Link
               href={`/projects/${prevProject.slug}`}
-              className="group flex items-center gap-2 text-sm text-[#686868] hover:text-[#222222] transition-colors"
+              className="flex items-center gap-2 text-xs font-mono text-[#686868] hover:text-[#2D4A3E] transition-colors"
             >
-              <ArrowLeft className="w-4 h-4 text-[#2D4A3E] group-hover:-translate-x-1 transition-transform" />
-              <div>
-                <span className="text-xs font-mono block text-[#686868]">
-                  Previous Case Study
-                </span>
-                <span className="font-serif text-base text-[#222222]">
-                  {prevProject.title.split("—")[0].trim()}
-                </span>
-              </div>
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Previous: {prevProject.title.split("—")[0].trim()}</span>
             </Link>
           ) : (
             <div />
           )}
 
           <Button href="/projects" variant="secondary">
-            All Projects Catalog
+            <span>All Projects Catalog</span>
           </Button>
 
           {nextProject ? (
             <Link
               href={`/projects/${nextProject.slug}`}
-              className="group flex items-center gap-2 text-sm text-[#686868] hover:text-[#222222] text-right transition-colors"
+              className="flex items-center gap-2 text-xs font-mono text-[#686868] hover:text-[#2D4A3E] transition-colors"
             >
-              <div>
-                <span className="text-xs font-mono block text-[#686868]">
-                  Next Case Study
-                </span>
-                <span className="font-serif text-base text-[#222222]">
-                  {nextProject.title.split("—")[0].trim()}
-                </span>
-              </div>
-              <ArrowRight className="w-4 h-4 text-[#2D4A3E] group-hover:translate-x-1 transition-transform" />
+              <span>Next: {nextProject.title.split("—")[0].trim()}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           ) : (
             <div />

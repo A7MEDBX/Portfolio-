@@ -5,6 +5,40 @@ export const projects: Project[] = [
     slug: "samcs",
     title: "SAMCS — Smart Autonomous Metro Control & Monitoring Platform",
     subtitle: "Real-time supervisory telemetry, autonomous transit coordination, and hardware gateway integration.",
+    oneSentenceOverview:
+      "Centralized backend architecture coordinating metro fleet telemetry, validating serial sensor frames, and broadcasting live transit coordinates.",
+    valueStatement:
+      "Eliminates database write bottlenecks during high-frequency train sensor broadcasts by decoupling telemetry ingestion from persistent audit logging through message queues.",
+    primaryAction: {
+      label: "Inspect Telemetry & Architecture",
+      href: "#project-media",
+    },
+    coreFeatures: [
+      {
+        title: "UART Telemetry Ingestion & CRC Validation",
+        description:
+          "Ingests continuous sensor byte frames from moving rolling stock with cyclic redundancy checks to detect frame desynchronization and prevent corrupted telemetry.",
+        workflow: "Hardware-to-Cloud Pipeline",
+      },
+      {
+        title: "Event-Driven Queue Decoupling",
+        description:
+          "Separates real-time dispatcher telemetry feeds from historical audit logging via RabbitMQ message brokers, maintaining high ingestion throughput without database lag.",
+        workflow: "Asynchronous Service Architecture",
+      },
+      {
+        title: "Sub-Second Fleet Monitoring over WebSockets",
+        description:
+          "Streams validated train positions, speed metrics, and track occupancy alerts directly to operational dispatch dashboards in real time.",
+        workflow: "Operational Dispatch Visibility",
+      },
+      {
+        title: "Dual-Tier Persistence & State Caching",
+        description:
+          "Maintains volatile train positions in fast in-memory Redis caches while asynchronously committing historical telemetry and transit logs to relational storage.",
+        workflow: "Data Integrity & Auditability",
+      },
+    ],
     category: "Distributed Systems & Telemetry",
     timeline: "2026",
     status: "Active",
@@ -227,6 +261,46 @@ export const projects: Project[] = [
     slug: "lostproject",
     title: "Finder (Lost & Found Asset Recovery Platform)",
     subtitle: "Mobile application and backend service for asset recovery, 14-digit National ID verification, AI matching, and recovery rewards.",
+    oneSentenceOverview:
+      "Mobile application and backend platform that coordinates lost and found item recovery across Egypt with verified identity checks and AI image matching.",
+    valueStatement:
+      "Protects communities from fraudulent claims through mandatory Egyptian National ID verification while using AI embeddings to match misplaced belongings.",
+    primaryAction: {
+      label: "View App Gallery (6 Screens)",
+      href: "#project-media",
+    },
+    coreFeatures: [
+      {
+        title: "14-Digit Egyptian National ID KYC",
+        description:
+          "Enforces mandatory identity verification and ID card document uploads before users can post reports or contact claimants, deterring anonymous scammers.",
+        workflow: "Trust & Anti-Fraud Security",
+      },
+      {
+        title: "AI Photo-Assisted Item Registration",
+        description:
+          "Allows reporters to upload property photographs processed for computer vision feature extraction and semantic vector embedding search.",
+        workflow: "Visual Asset Indexing",
+      },
+      {
+        title: "Hybrid Categorical & Semantic Matching",
+        description:
+          "Cross-references deterministic location and category filters with Pinecone vector similarity to detect matching property listings.",
+        workflow: "Automated Incident Matching",
+      },
+      {
+        title: "Community Feed with Gated Privacy",
+        description:
+          "Displays active lost and found reports across Egyptian governorates with sensitive identifying details masked until mutual verification.",
+        workflow: "Privacy-Preserving Discovery",
+      },
+      {
+        title: "Recovery Points & Mobile Cash-Out",
+        description:
+          "Rewards citizens who return belongings with redeemable points withdrawable through Vodafone Cash, Orange Cash, Etisalat Cash, and InstaPay.",
+        workflow: "Incentivized Citizen Returns",
+      },
+    ],
     category: "Mobile Backend & Platform",
     timeline: "2025 — 2026",
     status: "Completed",
@@ -440,6 +514,35 @@ export const projects: Project[] = [
     slug: "airzigzag",
     title: "Airzigzag",
     subtitle: "Travel-focused website and destination content platform with structured website architecture.",
+    oneSentenceOverview:
+      "International travel platform offering comprehensive destination guides, curated multi-leg flight discovery, and responsive trip planning.",
+    valueStatement:
+      "Simplifies international travel planning by organizing regional itineraries, transit practicalities, and flight connections into an easily browsable catalog.",
+    primaryAction: {
+      label: "Visit Live Platform",
+      href: "https://airzigzag.com",
+      external: true,
+    },
+    coreFeatures: [
+      {
+        title: "Curated International Destination Guides",
+        description:
+          "Presents structured itineraries, transit logistics, and visa considerations across global destinations with search-optimized URL structures.",
+        workflow: "Travel Research",
+      },
+      {
+        title: "Quick Trip Finder & Regional Filtering",
+        description:
+          "Enables travelers to filter destinations by geographic region, journey style, and flight duration to surface relevant recommendations.",
+        workflow: "Journey Discovery",
+      },
+      {
+        title: "Responsive, Search-Optimized Web Architecture",
+        description:
+          "Engineered for high-speed page loads, clear metadata design, and seamless reading experiences across mobile and desktop devices.",
+        workflow: "Content Delivery",
+      },
+    ],
     category: "Web Architecture & Content",
     timeline: "2025 — 2026",
     status: "Completed",
@@ -609,6 +712,40 @@ export const projects: Project[] = [
     title: "IEEE Aswan Student Branch Website",
     subtitle:
       "Collaborative full-stack web platform powering public presence, event registrations, and administrative operations.",
+    oneSentenceOverview:
+      "Full-stack web platform unifying public branch community presence, event registration pipelines, and authenticated administrative workflows.",
+    valueStatement:
+      "Replaced disjointed registration forms with a centralized system combining public chapter promotion and role-based administrative verification.",
+    primaryAction: {
+      label: "Watch Launch Demonstration",
+      href: "#project-media",
+    },
+    coreFeatures: [
+      {
+        title: "Public Event Directory & Chapter Showcase",
+        description:
+          "Presents branch activities, technical chapters, and upcoming workshops with responsive layouts and accessible event schedules.",
+        workflow: "Community Engagement",
+      },
+      {
+        title: "Structured Event Registration Pipeline",
+        description:
+          "Captures and validates attendee submissions with transactional persistence, providing automated receipt confirmation and review.",
+        workflow: "Attendee Onboarding",
+      },
+      {
+        title: "Role-Based Administrative Workflows",
+        description:
+          "Provides secure dashboards for board members and web officers to review registrations, verify attendance, and manage community inquiries.",
+        workflow: "Operations & Governance",
+      },
+      {
+        title: "Content, Media & Sponsor Management",
+        description:
+          "Enables officers to maintain sponsor banners, photo archives, and executive rosters dynamically through authenticated API endpoints.",
+        workflow: "Branch Administration",
+      },
+    ],
     category: "Full-Stack Web Platform",
     timeline: "2025 — 2026",
     status: "Launched",
@@ -814,6 +951,40 @@ export const projects: Project[] = [
     title: "IEEE Olympics — Problem Solving Duel Competition",
     subtitle:
       "Competitive programming event featuring a qualification round and a double-elimination duel tournament.",
+    oneSentenceOverview:
+      "Competitive programming tournament format featuring a timed qualification round and a high-stakes double-elimination duel tournament.",
+    valueStatement:
+      "Evaluates algorithmic problem-solving speed, accuracy, and composure under pressure through structured head-to-head elimination duels.",
+    primaryAction: {
+      label: "View Tournament Bracket & Photos",
+      href: "#project-media",
+    },
+    coreFeatures: [
+      {
+        title: "90-Minute Timed Qualification Round",
+        description:
+          "Assesses participants across 10 progressive algorithmic problems scored deterministically by solve count and penalty time.",
+        workflow: "Competitor Benchmarking",
+      },
+      {
+        title: "Top-16 Double-Elimination Bracket",
+        description:
+          "Seeds top qualifiers into a dual-bracket tournament structure providing winners-bracket advancement and redemption pathways.",
+        workflow: "Tournament Seeding",
+      },
+      {
+        title: "Head-to-Head 1-on-1 Elimination Duels",
+        description:
+          "Pairs competitors in simultaneous live problem-solving duels where the first verified successful submission secures match victory.",
+        workflow: "Direct Match Resolution",
+      },
+      {
+        title: "Decisive Tiebreaker Protocols",
+        description:
+          "Introduces backup algorithmic challenges when initial problems remain unsolved within time limits, ensuring definitive bracket advancement.",
+        workflow: "Rule Enforcement",
+      },
+    ],
     category: "Competition Design & Event Operations",
     timeline: "2025 — 2026",
     status: "Completed",
@@ -987,6 +1158,34 @@ export const projects: Project[] = [
     slug: "sport-club-management",
     title: "Sport Club Management System",
     subtitle: "Club administration platform managing facility reservations, memberships, and OTP-secured authentication.",
+    oneSentenceOverview:
+      "Administrative backend system streamlining sports club operations, facility reservations, member subscriptions, and secure authentication.",
+    valueStatement:
+      "Eliminates scheduling conflicts and administrative overhead through centralized court booking rules and OTP-authenticated member access.",
+    primaryAction: {
+      label: "Explore System Architecture",
+      href: "#technical-details",
+    },
+    coreFeatures: [
+      {
+        title: "Member Onboarding & Subscription Lifecycle",
+        description:
+          "Manages member profiles, subscription status, and role permissions across staff, coaches, and club members.",
+        workflow: "Membership Administration",
+      },
+      {
+        title: "Court & Facility Booking Engine",
+        description:
+          "Coordinates court availability, recurring time slots, and reservation limits to prevent overlapping or invalid bookings.",
+        workflow: "Facility Utilization",
+      },
+      {
+        title: "OTP-Based Secure Authentication",
+        description:
+          "Protects member accounts and reservation requests with time-sensitive one-time passcodes and structured session tokens.",
+        workflow: "Access Security",
+      },
+    ],
     category: "Full-Stack System",
     timeline: "2025 — 2026",
     status: "Completed",
@@ -1105,6 +1304,34 @@ export const projects: Project[] = [
     slug: "egyptian-law-ai-chatbot",
     title: "Egyptian Law AI Chatbot",
     subtitle: "Legal document processing and question-answering assistant for Egyptian statutory documents.",
+    oneSentenceOverview:
+      "Retrieval-augmented AI legal assistant enabling natural-language search and grounded question answering across Egyptian legal codices.",
+    valueStatement:
+      "Makes complex Egyptian civil and commercial statutes accessible to non-specialists by surfacing relevant articles and plain-language summaries.",
+    primaryAction: {
+      label: "Explore RAG Pipeline",
+      href: "#technical-details",
+    },
+    coreFeatures: [
+      {
+        title: "Arabic Legal Document OCR & Ingestion",
+        description:
+          "Processes legal codices, court rulings, and statutes with specialized Arabic optical character recognition and text normalization.",
+        workflow: "Corpus Digitization",
+      },
+      {
+        title: "Semantic Statutory Retrieval",
+        description:
+          "Indexes legal articles into vector spaces to surface the most relevant statutory provisions based on the contextual meaning of user questions.",
+        workflow: "Contextual Article Search",
+      },
+      {
+        title: "Grounded Q&A with Statutory Citations",
+        description:
+          "Synthesizes clear legal guidance backed by direct references to the underlying statutory articles to ensure verifiable accuracy.",
+        workflow: "Grounded Legal Guidance",
+      },
+    ],
     category: "Document Processing & AI",
     timeline: "2025 — 2026",
     status: "In Development",
@@ -1222,6 +1449,34 @@ export const projects: Project[] = [
     slug: "hospital-management-system",
     title: "Hospital Management System",
     subtitle: "Desktop clinical administration application managing patient records and appointments.",
+    oneSentenceOverview:
+      "Healthcare administration backend coordinating patient health records, clinical appointments, and physician schedules.",
+    valueStatement:
+      "Reduces clinical coordination friction by unifying patient medical histories, doctor shift scheduling, and prescription auditing.",
+    primaryAction: {
+      label: "Explore System Architecture",
+      href: "#technical-details",
+    },
+    coreFeatures: [
+      {
+        title: "Centralized Patient Medical Records",
+        description:
+          "Maintains clinical encounter histories, diagnostic logs, and patient contact data with strict relational integrity constraints.",
+        workflow: "Clinical Data Integrity",
+      },
+      {
+        title: "Physician Scheduling & Appointment Routing",
+        description:
+          "Manages doctor availability, clinic room allocation, and patient queue sequencing to minimize clinic wait times.",
+        workflow: "Clinic Operations",
+      },
+      {
+        title: "Prescription & Medication Tracking",
+        description:
+          "Records prescribed medications, dosages, and fulfillment statuses tied directly to specific patient clinical consultations.",
+        workflow: "Pharmacy & Treatment Auditing",
+      },
+    ],
     category: "Desktop Application",
     timeline: "2025 — 2026",
     status: "Completed",

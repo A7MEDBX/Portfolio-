@@ -16,10 +16,26 @@ export interface ProjectImplementationSection {
   points: string[];
 }
 
+export interface ProjectCoreFeature {
+  title: string;
+  description: string;
+  workflow?: string;
+}
+
+export interface ProjectPrimaryAction {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
 export interface Project {
   slug: string;
   title: string;
   subtitle: string;
+  oneSentenceOverview?: string;
+  valueStatement?: string;
+  primaryAction?: ProjectPrimaryAction;
+  coreFeatures?: ProjectCoreFeature[];
   category: string;
   timeline: string;
   status: "Completed" | "Active" | "In Development" | "Archived" | "Launched";
